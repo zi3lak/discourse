@@ -310,7 +310,7 @@ RSpec/ReturnFromStub:
   Enabled: true
 
 RSpec/ScatteredSetup:
-  Enabled: false # TODO
+  Enabled: true
 
 RSpec/SharedContext:
   Enabled: true

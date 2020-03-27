@@ -24,8 +24,6 @@ describe PostMover do
 
   describe 'move_posts' do
     context 'topics' do
-      before { freeze_time }
-
       fab!(:user) { Fabricate(:user, admin: true) }
       fab!(:another_user) { evil_trout }
       fab!(:category) { Fabricate(:category, user: user) }
@@ -50,6 +48,7 @@ describe PostMover do
       let(:p6) { Fabricate(:post, topic: topic, created_at: 15.minutes.ago) }
 
       before do
+        freeze_time
         SiteSetting.tagging_enabled = true
         Jobs.run_immediately!
         p1.replies.push(p2, p3)
@@ -994,14 +993,14 @@ describe PostMover do
 
         context "to an existing topic with a deleted post" do
 
-          before do
-            topic.expects(:add_moderator_post)
-          end
-
           fab!(:destination_topic) { Fabricate(:topic, user: user) }
           fab!(:destination_op) { Fabricate(:post, topic: destination_topic, user: user) }
           fab!(:destination_deleted_reply) { Fabricate(:post, topic: destination_topic, user: another_user) }
           let(:moved_to) { topic.move_posts(user, [p2.id, p4.id], destination_topic_id: destination_topic.id) }
+
+          before do
+            topic.expects(:add_moderator_post)
+          end
 
           it "works correctly" do
             destination_deleted_reply.trash!

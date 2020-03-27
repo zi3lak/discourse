@@ -21,9 +21,6 @@ describe SearchController do
   context "integration" do
     before do
       SearchIndexer.enable
-    end
-
-    before do
       # TODO be a bit more strategic here instead of junking
       # all of redis
       Discourse.redis.flushall

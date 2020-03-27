@@ -5,16 +5,15 @@ require "rails_helper"
 describe Jobs::NotifyMailingListSubscribers do
 
   fab!(:mailing_list_user) { Fabricate(:user) }
-
-  before { mailing_list_user.user_option.update(mailing_list_mode: true, mailing_list_mode_frequency: 1) }
-  before do
-    SiteSetting.tagging_enabled = true
-  end
-
   fab!(:tag) { Fabricate(:tag) }
   fab!(:topic) { Fabricate(:topic, tags: [tag]) }
   fab!(:user) { Fabricate(:user) }
   fab!(:post) { Fabricate(:post, topic: topic, user: user) }
+
+  before do
+    mailing_list_user.user_option.update(mailing_list_mode: true, mailing_list_mode_frequency: 1)
+    SiteSetting.tagging_enabled = true
+  end
 
   shared_examples "no emails" do
     it "doesn't send any emails" do

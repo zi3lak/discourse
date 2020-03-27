@@ -135,9 +135,6 @@ RSpec.describe 'Multisite s3 uploads', type: :multisite do
       SiteSetting.s3_secret_access_key = "s3-secret-access-key"
       SiteSetting.enable_s3_uploads = true
       SiteSetting.authorized_extensions = "pdf|png|jpg|gif"
-    end
-
-    before do
       s3_object.stubs(:put).returns(Aws::S3::Types::PutObjectOutput.new(etag: "etag"))
     end
 

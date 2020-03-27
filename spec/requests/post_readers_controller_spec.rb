@@ -7,9 +7,8 @@ describe PostReadersController do
     fab!(:admin) { Fabricate(:admin) }
     fab!(:reader) { Fabricate(:user) }
 
-    before { sign_in(admin) }
-
     before do
+      sign_in(admin)
       @group = Fabricate(:group)
       @group_message = Fabricate(:private_message_topic, allowed_groups: [@group])
       @post = Fabricate(:post, topic: @group_message, post_number: 3)
