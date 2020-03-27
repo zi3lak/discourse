@@ -3,6 +3,17 @@
 require 'rails_helper'
 
 describe Jobs::ExportCsvFile do
+  let(:user_list_export) { Jobs::ExportCsvFile.new.user_list_export }
+  let(:user_list_header) do
+    %w{
+      id name username email title created_at last_seen_at last_posted_at
+      last_emailed_at trust_level approved suspended_at suspended_till blocked
+      active admin moderator ip_address staged secondary_emails topics_entered
+      posts_read_count time_read topic_count post_count likes_given
+      likes_received location website views external_id external_email
+      external_username external_name external_avatar_url
+    }
+  end
 
   context '#execute' do
     fab!(:user) { Fabricate(:user, username: "john_doe") }
@@ -44,7 +55,6 @@ describe Jobs::ExportCsvFile do
 
   context '#user_archive_export' do
     let(:user) { Fabricate(:user) }
-
     let(:category) { Fabricate(:category_with_definition) }
     let(:subcategory) { Fabricate(:category_with_definition, parent_category_id: category.id) }
     let(:subsubcategory) { Fabricate(:category_with_definition, parent_category_id: subcategory.id) }
@@ -74,9 +84,7 @@ describe Jobs::ExportCsvFile do
   end
 
   context '.report_export' do
-
     let(:user) { Fabricate(:admin) }
-
     let(:exporter) do
       exporter = Jobs::ExportCsvFile.new
       exporter.instance_variable_set(:@entity, 'report')
@@ -141,21 +149,7 @@ describe Jobs::ExportCsvFile do
       expect(report[2]).to contain_exactly("2010-01-02", "2", "5", "8")
       expect(report[3]).to contain_exactly("2010-01-03", "3", "6", "9")
     end
-
   end
-
-  let(:user_list_header) {
-    %w{
-      id name username email title created_at last_seen_at last_posted_at
-      last_emailed_at trust_level approved suspended_at suspended_till blocked
-      active admin moderator ip_address staged secondary_emails topics_entered
-      posts_read_count time_read topic_count post_count likes_given
-      likes_received location website views external_id external_email
-      external_username external_name external_avatar_url
-    }
-  }
-
-  let(:user_list_export) { Jobs::ExportCsvFile.new.user_list_export }
 
   def to_hash(row)
     Hash[*user_list_header.zip(row).flatten]

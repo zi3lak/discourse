@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 describe SiteSettingExtension do
+  let(:settings2) { new_settings(provider_local) }
+  let(:settings) { new_settings(provider_local) }
+  let(:provider_local) { SiteSettings::LocalProcessProvider.new }
 
   # We disable message bus here to avoid a large amount
   # of uneeded messaging, tests are careful to call refresh
@@ -36,18 +39,6 @@ describe SiteSettingExtension do
         expect(@types[:value_list]).to eq(12)
       end
     end
-  end
-
-  let :provider_local do
-    SiteSettings::LocalProcessProvider.new
-  end
-
-  let :settings do
-    new_settings(provider_local)
-  end
-
-  let :settings2 do
-    new_settings(provider_local)
   end
 
   it "Does not leak state cause changes are not linked" do
@@ -876,5 +867,4 @@ describe SiteSettingExtension do
       end
     end
   end
-
 end

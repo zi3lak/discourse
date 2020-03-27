@@ -148,17 +148,15 @@ describe StaffActionLogger do
   end
 
   describe "log_theme_change" do
+    let! :theme do
+      Fabricate(:theme)
+    end
 
     it "raises an error when params are invalid" do
       expect { logger.log_theme_change(nil, nil) }.to raise_error(Discourse::InvalidParameters)
     end
 
-    let! :theme do
-      Fabricate(:theme)
-    end
-
     it "logs new site customizations" do
-
       log_record = logger.log_theme_change(nil, theme)
       expect(log_record.subject).to eq(theme.name)
       expect(log_record.previous_value).to eq(nil)
@@ -480,9 +478,8 @@ describe StaffActionLogger do
   end
 
   describe 'log_check_personal_message' do
-    fab!(:personal_message) { Fabricate(:private_message_topic) }
-
     subject(:log_check_personal_message) { described_class.new(admin).log_check_personal_message(personal_message) }
+    fab!(:personal_message) { Fabricate(:private_message_topic) }
 
     it 'raises an error when topic is nil' do
       expect { logger.log_check_personal_message(nil) }.to raise_error(Discourse::InvalidParameters)
@@ -498,9 +495,8 @@ describe StaffActionLogger do
   end
 
   describe 'log_post_approved' do
-    fab!(:approved_post) { Fabricate(:post) }
-
     subject(:log_post_approved) { described_class.new(admin).log_post_approved(approved_post) }
+    fab!(:approved_post) { Fabricate(:post) }
 
     it 'raises an error when post is nil' do
       expect { logger.log_post_approved(nil) }.to raise_error(Discourse::InvalidParameters)
@@ -516,9 +512,8 @@ describe StaffActionLogger do
   end
 
   describe 'log_post_rejected' do
-    fab!(:reviewable) { Fabricate(:reviewable_queued_post) }
-
     subject(:log_post_rejected) { described_class.new(admin).log_post_rejected(reviewable, DateTime.now) }
+    fab!(:reviewable) { Fabricate(:reviewable_queued_post) }
 
     it 'raises an error when reviewable not supplied' do
       expect { logger.log_post_rejected(nil, DateTime.now) }.to raise_error(Discourse::InvalidParameters)

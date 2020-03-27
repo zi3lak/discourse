@@ -4,6 +4,8 @@
 require 'rails_helper'
 
 describe ThemeField do
+  let(:key) { "themes.settings_errors" }
+
   after(:all) do
     ThemeField.destroy_all
   end
@@ -231,8 +233,6 @@ HTML
     field.ensure_baked!
     field
   end
-
-  let(:key) { "themes.settings_errors" }
 
   it "forces re-transpilation of theme JS when settings YAML changes" do
     theme = Fabricate(:theme)

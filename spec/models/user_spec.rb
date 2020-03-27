@@ -73,9 +73,9 @@ describe User do
     end
 
     describe 'emails' do
-      it { is_expected.to validate_presence_of :primary_email }
-
       let(:user) { Fabricate.build(:user) }
+
+      it { is_expected.to validate_presence_of :primary_email }
 
       describe 'when record has a valid email' do
         it "should be valid" do

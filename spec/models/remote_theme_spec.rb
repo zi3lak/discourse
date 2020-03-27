@@ -3,6 +3,23 @@
 require 'rails_helper'
 
 describe RemoteTheme do
+  let(:gitlab_repo) do
+    RemoteTheme.create!(
+      remote_url: "https://gitlab.com/org/repo.git",
+      local_version: "a2ec030e551fc8d8579790e1954876fe769fe40a",
+      remote_version: "21122230dbfed804067849393c3332083ddd0c07",
+      commits_behind: 5
+    )
+  end
+  let(:github_repo) do
+    RemoteTheme.create!(
+      remote_url: "https://github.com/org/testtheme.git",
+      local_version: "a2ec030e551fc8d8579790e1954876fe769fe40a",
+      remote_version: "21122230dbfed804067849393c3332083ddd0c07",
+      commits_behind: 2
+    )
+  end
+
   context '#import_remote' do
     def setup_git_repo(files)
       dir = Dir.tmpdir
@@ -180,24 +197,6 @@ describe RemoteTheme do
       expect(remote.diff_local_changes[:diff]).not_to include("similarity index 100%")
       expect(remote.diff_local_changes[:diff]).to include("background-color: blue")
     end
-  end
-
-  let(:github_repo) do
-    RemoteTheme.create!(
-      remote_url: "https://github.com/org/testtheme.git",
-      local_version: "a2ec030e551fc8d8579790e1954876fe769fe40a",
-      remote_version: "21122230dbfed804067849393c3332083ddd0c07",
-      commits_behind: 2
-    )
-  end
-
-  let(:gitlab_repo) do
-    RemoteTheme.create!(
-      remote_url: "https://gitlab.com/org/repo.git",
-      local_version: "a2ec030e551fc8d8579790e1954876fe769fe40a",
-      remote_version: "21122230dbfed804067849393c3332083ddd0c07",
-      commits_behind: 5
-    )
   end
 
   context "#github_diff_link" do

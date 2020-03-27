@@ -275,6 +275,11 @@ describe Email::MessageBuilder do
 
   context "from field" do
 
+    let(:custom_aliased_from) { Email::MessageBuilder.new(to_address, from_alias: "Finn the Dog", from: finn_email) }
+    let(:aliased_from) { Email::MessageBuilder.new(to_address, from_alias: "Finn the Dog") }
+    let(:custom_from) { Email::MessageBuilder.new(to_address, from: finn_email).build_args }
+    let(:finn_email) { 'finn@adventuretime.ooo' }
+
     it "has the default from" do
       SiteSetting.title = ""
       expect(build_args[:from]).to eq(SiteSetting.notification_email)
@@ -285,22 +290,13 @@ describe Email::MessageBuilder do
       expect(build_args[:from]).to eq("\"Dog Talk\" <#{SiteSetting.notification_email}>")
     end
 
-    let(:finn_email) { 'finn@adventuretime.ooo' }
-    let(:custom_from) { Email::MessageBuilder.new(to_address, from: finn_email).build_args }
-
     it "allows us to override from" do
       expect(custom_from[:from]).to eq(finn_email)
     end
 
-    let(:aliased_from) { Email::MessageBuilder.new(to_address, from_alias: "Finn the Dog") }
-
     it "allows us to alias the from address" do
       expect(aliased_from.build_args[:from]).to eq("\"Finn the Dog\" <#{SiteSetting.notification_email}>")
     end
-
-    let(:custom_aliased_from) { Email::MessageBuilder.new(to_address,
-                                                          from_alias: "Finn the Dog",
-                                                          from: finn_email) }
 
     it "allows us to alias a custom from address" do
       expect(custom_aliased_from.build_args[:from]).to eq("\"Finn the Dog\" <#{finn_email}>")

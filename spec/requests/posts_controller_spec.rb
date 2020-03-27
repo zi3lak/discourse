@@ -298,8 +298,6 @@ describe PostsController do
   end
 
   describe '#update' do
-    include_examples 'action requires login', :put, "/posts/2.json"
-
     let!(:post) { post_by_user }
     let(:update_params) do
       {
@@ -307,6 +305,8 @@ describe PostsController do
         image_sizes: { 'http://image.com/image.jpg' => { 'width' => 123, 'height' => 456 } },
       }
     end
+
+    include_examples 'action requires login', :put, "/posts/2.json"
 
     describe 'when logged in as a regular user' do
       before do
@@ -483,15 +483,16 @@ describe PostsController do
   end
 
   describe '#bookmark' do
-    include_examples 'action requires login', :put, "/posts/2/bookmark.json"
     let!(:post) { post_by_user }
 
+    include_examples 'action requires login', :put, "/posts/2/bookmark.json"
+
     describe 'when logged in' do
+      fab!(:private_message) { Fabricate(:private_message_post) }
+
       before do
         sign_in(user)
       end
-
-      fab!(:private_message) { Fabricate(:private_message_post) }
 
       it "raises an error if the user doesn't have permission to see the post" do
         put "/posts/#{private_message.id}/bookmark.json", params: { bookmarked: "true" }
@@ -1254,6 +1255,7 @@ describe PostsController do
 
         context "with a shared category" do
           fab!(:shared_category) { Fabricate(:category) }
+
           before do
             SiteSetting.shared_drafts_category = shared_category.id
           end
@@ -1517,8 +1519,6 @@ describe PostsController do
   end
 
   describe '#revert' do
-    include_examples 'action requires login', :put, "/posts/123/revisions/2/revert.json"
-
     fab!(:post) { Fabricate(:post, user: Fabricate(:user), raw: "Lorem ipsum dolor sit amet, cu nam libris tractatos, ancillae senserit ius ex") }
     let(:post_revision) { Fabricate(:post_revision, post: post, modifications: { "raw" => ["this is original post body.", "this is edited post body."] }) }
     let(:blank_post_revision) { Fabricate(:post_revision, post: post, modifications: { "edit_reason" => ["edit reason #1", "edit reason #2"] }) }
@@ -1526,6 +1526,8 @@ describe PostsController do
 
     let(:post_id) { post.id }
     let(:revision_id) { post_revision.number }
+
+    include_examples 'action requires login', :put, "/posts/123/revisions/2/revert.json"
 
     describe 'when logged in as a regular user' do
       it "does not work" do
@@ -1583,11 +1585,11 @@ describe PostsController do
   end
 
   describe '#expand_embed' do
+    fab!(:post) { Fabricate(:post) }
+
     before do
       sign_in(user)
     end
-
-    fab!(:post) { Fabricate(:post) }
 
     it "raises an error when you can't see the post" do
       post = Fabricate(:private_message_post)

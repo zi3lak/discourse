@@ -259,7 +259,7 @@ RSpec/LeakyConstantDeclaration:
   Enabled: false # To be decided
 
 RSpec/LetBeforeExamples:
-  Enabled: false # TODO
+  Enabled: true
 
 RSpec/LetSetup:
   Enabled: false # TODO

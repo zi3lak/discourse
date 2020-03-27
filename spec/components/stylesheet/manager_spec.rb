@@ -67,6 +67,9 @@ describe Stylesheet::Manager do
   end
 
   describe 'digest' do
+    let(:image2) { file_from_fixtures("logo-dev.png") }
+    let(:image) { file_from_fixtures("logo.png") }
+
     after do
       DiscoursePluginRegistry.reset!
     end
@@ -104,9 +107,6 @@ describe Stylesheet::Manager do
 
       expect(digest1).not_to eq(digest2)
     end
-
-    let(:image) { file_from_fixtures("logo.png") }
-    let(:image2) { file_from_fixtures("logo-dev.png") }
 
     it 'can correctly account for theme uploads in digest' do
       theme = Fabricate(:theme)

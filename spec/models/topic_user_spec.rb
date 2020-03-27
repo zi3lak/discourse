@@ -3,17 +3,28 @@
 require 'rails_helper'
 
 describe TopicUser do
-  let :watching do
-    TopicUser.notification_levels[:watching]
+  let(:watching) { TopicUser.notification_levels[:watching] }
+  let(:regular) { TopicUser.notification_levels[:regular] }
+  let(:tracking) { TopicUser.notification_levels[:tracking] }
+
+  fab!(:user) { Fabricate(:user) }
+
+  let(:topic) do
+    u = Fabricate(:user)
+    guardian = Guardian.new(u)
+    TopicCreator.create(u, guardian, title: "this is my topic title")
+  end
+  let(:topic_user) { TopicUser.get(topic, user) }
+  let(:topic_creator_user) { TopicUser.get(topic, topic.user) }
+
+  let(:new_user) do
+    u = Fabricate(:user)
+    u.user_option.update_columns(auto_track_topics_after_msecs: 1000)
+    u
   end
 
-  let :regular do
-    TopicUser.notification_levels[:regular]
-  end
-
-  let :tracking do
-    TopicUser.notification_levels[:tracking]
-  end
+  let(:topic_new_user) { TopicUser.get(topic, new_user) }
+  let(:yesterday) { DateTime.now.yesterday }
 
   describe "#unwatch_categories!" do
     it "correctly unwatches categories" do
@@ -74,25 +85,6 @@ describe TopicUser do
 
   it { is_expected.to belong_to :user }
   it { is_expected.to belong_to :topic }
-
-  fab!(:user) { Fabricate(:user) }
-
-  let(:topic) {
-    u = Fabricate(:user)
-    guardian = Guardian.new(u)
-    TopicCreator.create(u, guardian, title: "this is my topic title")
-  }
-  let(:topic_user) { TopicUser.get(topic, user) }
-  let(:topic_creator_user) { TopicUser.get(topic, topic.user) }
-
-  let(:new_user) {
-    u = Fabricate(:user)
-    u.user_option.update_columns(auto_track_topics_after_msecs: 1000)
-    u
-  }
-
-  let(:topic_new_user) { TopicUser.get(topic, new_user) }
-  let(:yesterday) { DateTime.now.yesterday }
 
   def ensure_topic_user
     TopicUser.change(user, topic, last_emailed_post_number: 1)

@@ -386,6 +386,7 @@ RSpec.describe TopicsController do
     describe 'merging into another topic' do
       let(:p1) { Fabricate(:post, user: user) }
       let(:topic) { p1.topic }
+      let(:dest_topic) { Fabricate(:topic) }
 
       it "raises an error without destination_topic_id" do
         sign_in(moderator)
@@ -398,8 +399,6 @@ RSpec.describe TopicsController do
         post "/t/111/merge-topic.json", params: { destination_topic_id: 345 }
         expect(response).to be_forbidden
       end
-
-      let(:dest_topic) { Fabricate(:topic) }
 
       context 'moves all the posts to the destination topic' do
         it "returns success" do
@@ -420,6 +419,11 @@ RSpec.describe TopicsController do
       let(:message) { Fabricate(:private_message_topic, user: user) }
       let!(:p1) { Fabricate(:post, topic: message, user: trust_level_4) }
       let!(:p2) { Fabricate(:post, topic: message, reply_to_post_number: p1.post_number, user: user) }
+      let(:dest_message) do
+        Fabricate(:private_message_topic, user: trust_level_4, topic_allowed_users: [
+          Fabricate.build(:topic_allowed_user, user: moderator)
+        ])
+      end
 
       it "raises an error without destination_topic_id" do
         sign_in(moderator)
@@ -436,12 +440,6 @@ RSpec.describe TopicsController do
           archetype: 'private_message'
         }
         expect(response).to be_forbidden
-      end
-
-      let(:dest_message) do
-        Fabricate(:private_message_topic, user: trust_level_4, topic_allowed_users: [
-          Fabricate.build(:topic_allowed_user, user: moderator)
-        ])
       end
 
       context 'moves all the posts to the destination message' do

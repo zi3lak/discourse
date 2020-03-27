@@ -8,13 +8,13 @@ RSpec.describe EmailController do
   fab!(:private_topic) { Fabricate(:private_message_topic) }
 
   context '.perform unsubscribe' do
+    fab!(:user) { Fabricate(:user) }
+    let(:key) { UnsubscribeKey.create_key_for(user, "all") }
+
     it 'raises not found on invalid key' do
       post "/email/unsubscribe/123.json"
       expect(response.status).to eq(404)
     end
-
-    fab!(:user) { Fabricate(:user) }
-    let(:key) { UnsubscribeKey.create_key_for(user, "all") }
 
     it 'can fully unsubscribe' do
       user.user_option.update_columns(email_digests: true,
@@ -186,14 +186,14 @@ RSpec.describe EmailController do
   end
 
   context '#unsubscribe' do
+    fab!(:user) { Fabricate(:user) }
+    let(:unsubscribe_key) { UnsubscribeKey.create_key_for(user, key_type) }
+
     it 'displays not found if key is not found' do
       navigate_to_unsubscribe(SecureRandom.hex)
 
       expect(response.body).to include(CGI.escapeHTML(I18n.t("unsubscribe.not_found_description")))
     end
-
-    fab!(:user) { Fabricate(:user) }
-    let(:unsubscribe_key) { UnsubscribeKey.create_key_for(user, key_type) }
 
     context 'Unsubscribe from digest' do
       let(:key_type) { 'digest' }

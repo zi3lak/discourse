@@ -3,9 +3,13 @@
 require 'rails_helper'
 
 describe Post do
-  before { Oneboxer.stubs :onebox }
-
   let(:upload_path) { Discourse.store.upload_path }
+  let(:topic) { Fabricate(:topic) }
+  let(:post_args) do
+    { user: topic.user, topic: topic }
+  end
+
+  before { Oneboxer.stubs :onebox }
 
   describe '#hidden_reasons' do
     context "verify enum sequence" do
@@ -70,11 +74,6 @@ describe Post do
   it { is_expected.not_to allow_value((" " * SiteSetting.min_post_length) + "x").for(:raw) }
 
   it { is_expected.to rate_limit }
-
-  let(:topic) { Fabricate(:topic) }
-  let(:post_args) do
-    { user: topic.user, topic: topic }
-  end
 
   describe 'scopes' do
 

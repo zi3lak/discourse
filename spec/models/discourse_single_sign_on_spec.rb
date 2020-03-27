@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe DiscourseSingleSignOn do
+  let(:ip_address) { "127.0.0.1" }
+
   before do
     @sso_url = "http://example.com/discourse_sso"
     @sso_secret = "shjkfdhsfkjh"
@@ -68,8 +70,6 @@ describe DiscourseSingleSignOn do
     expect(sso.username).to eq "sam"
     expect(sso.email).to eq "sam@sam.com"
   end
-
-  let(:ip_address) { "127.0.0.1" }
 
   it "bans bad external id" do
     sso = DiscourseSingleSignOn.new

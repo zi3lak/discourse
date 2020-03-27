@@ -3,19 +3,19 @@
 require 'rails_helper'
 
 describe PostAction do
-  it { is_expected.to rate_limit }
-
+  let(:bookmark) { PostAction.new(user_id: post.user_id, post_action_type_id: PostActionType.types[:bookmark] , post_id: post.id) }
   fab!(:moderator) { Fabricate(:moderator) }
   fab!(:codinghorror) { Fabricate(:coding_horror) }
   fab!(:eviltrout) { Fabricate(:evil_trout) }
   fab!(:admin) { Fabricate(:admin) }
   fab!(:post) { Fabricate(:post) }
   fab!(:second_post) { Fabricate(:post, topic: post.topic) }
-  let(:bookmark) { PostAction.new(user_id: post.user_id, post_action_type_id: PostActionType.types[:bookmark] , post_id: post.id) }
 
   def value_for(user_id, dt)
     GivenDailyLike.find_for(user_id, dt).pluck(:likes_given)[0] || 0
   end
+
+  it { is_expected.to rate_limit }
 
   it "disallows the same action from happening twice" do
     PostAction.create(user: eviltrout, post: post, post_action_type_id: PostActionType.types[:like])
