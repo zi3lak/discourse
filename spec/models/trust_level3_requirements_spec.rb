@@ -4,8 +4,8 @@ require 'rails_helper'
 
 describe TrustLevel3Requirements do
 
-  let(:user) { Fabricate.build(:user) }
   subject(:tl3_requirements) { described_class.new(user) }
+  let(:user) { Fabricate.build(:user) }
   fab!(:moderator) { Fabricate(:moderator) }
 
   before do

@@ -9,9 +9,9 @@ describe UserSilencer do
   end
 
   describe 'silence' do
+    subject(:silence_user) { silencer.silence }
     fab!(:user) { Fabricate(:user) }
     let(:silencer) { UserSilencer.new(user) }
-    subject(:silence_user) { silencer.silence }
 
     it 'silences the user' do
       u = Fabricate(:user)
@@ -71,8 +71,8 @@ describe UserSilencer do
   end
 
   describe 'unsilence' do
-    let(:user)             { stub_everything(save: true) }
     subject(:unsilence_user) { UserSilencer.unsilence(user, Fabricate.build(:admin)) }
+    let(:user)             { stub_everything(save: true) }
 
     it 'unsilences the user' do
       u = Fabricate(:user, silenced_till: 1.year.from_now)
@@ -100,9 +100,9 @@ describe UserSilencer do
   end
 
   describe 'hide_posts' do
+    subject       { UserSilencer.new(user) }
     fab!(:user)    { Fabricate(:user, trust_level: 0) }
     fab!(:post)   { Fabricate(:post, user: user) }
-    subject       { UserSilencer.new(user) }
 
     it "hides all the user's posts" do
       subject.silence

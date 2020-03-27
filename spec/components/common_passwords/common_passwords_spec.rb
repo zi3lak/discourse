@@ -9,9 +9,8 @@ describe CommonPasswords do
   end
 
   describe "#common_password?" do
-    before { described_class.stubs(:redis).returns(stub_everything) }
-
     subject { described_class.common_password? @password }
+    before { described_class.stubs(:redis).returns(stub_everything) }
 
     it "returns false if password isn't in the common passwords list" do
       described_class.stubs(:password_list).returns(stub_everything(include?: false))

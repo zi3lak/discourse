@@ -3,14 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe BookmarkManager do
+  subject { described_class.new(user) }
   let(:user) { Fabricate(:user) }
 
   let(:reminder_type) { 'tomorrow' }
   let(:reminder_at) { 1.day.from_now }
   fab!(:post) { Fabricate(:post) }
   let(:name) { 'Check this out!' }
-
-  subject { described_class.new(user) }
 
   describe ".create" do
     it "creates the bookmark for the user" do

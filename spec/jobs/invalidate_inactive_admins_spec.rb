@@ -3,10 +3,9 @@
 require 'rails_helper'
 
 describe Jobs::InvalidateInactiveAdmins do
+  subject { Jobs::InvalidateInactiveAdmins.new.execute({}) }
   fab!(:active_admin) { Fabricate(:admin, last_seen_at: 1.hour.ago) }
   before { active_admin.email_tokens.update_all(confirmed: true) }
-
-  subject { Jobs::InvalidateInactiveAdmins.new.execute({}) }
 
   it "does nothing when all admins have been seen recently" do
     SiteSetting.invalidate_inactive_admin_email_after_days = 365

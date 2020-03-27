@@ -101,6 +101,14 @@ describe PostOwnerChanger do
     end
 
     context "integration tests" do
+      subject(:change_owners) do
+        PostOwnerChanger.new(
+          post_ids: [p1.id, p2.id],
+          topic_id: topic.id,
+          new_owner: user_a,
+          acting_user: editor
+        ).change_owner!
+      end
       let(:p1user) { p1.user }
       let(:p2user) { p2.user }
 
@@ -127,15 +135,6 @@ describe PostOwnerChanger do
                            target_post_id: p2.id, target_topic_id: p2.topic_id, created_at: p2.created_at)
 
         UserActionManager.enable
-      end
-
-      subject(:change_owners) do
-        PostOwnerChanger.new(
-          post_ids: [p1.id, p2.id],
-          topic_id: topic.id,
-          new_owner: user_a,
-          acting_user: editor
-        ).change_owner!
       end
 
       it "updates users' topic and post counts" do

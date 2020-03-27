@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe BasicGroupSerializer do
+  subject { described_class.new(group, scope: guardian, root: false) }
   let(:guardian) { Guardian.new }
   fab!(:group) { Fabricate(:group) }
-  subject { described_class.new(group, scope: guardian, root: false) }
 
   describe '#display_name' do
     describe 'automatic group' do

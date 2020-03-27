@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe SiteSettings::TypeSupervisor do
+  subject { SiteSettings::TypeSupervisor }
   let :provider_local do
     SiteSettings::LocalProcessProvider.new
   end
@@ -10,8 +11,6 @@ describe SiteSettings::TypeSupervisor do
   let :settings do
     new_settings(provider_local)
   end
-
-  subject { SiteSettings::TypeSupervisor }
 
   describe 'constants' do
     it 'validator opts are the subset of consumed opts' do

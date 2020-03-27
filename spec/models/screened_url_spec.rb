@@ -26,8 +26,8 @@ describe ScreenedUrl do
   end
 
   describe 'normalize' do
-    let(:record) { described_class.new(@params) }
     subject { record.normalize; record }
+    let(:record) { described_class.new(@params) }
 
     ['http://', 'HTTP://', 'https://', 'HTTPS://'].each do |prefix|
       it "strips #{prefix}" do

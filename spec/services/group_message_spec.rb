@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe GroupMessage do
 
+  subject(:send_group_message) { GroupMessage.create(moderators_group, :user_automatically_silenced, user: user) }
   let(:moderators_group) { Group[:moderators].name }
 
   let!(:admin)     { Fabricate.build(:admin, id: 999) }
@@ -12,8 +13,6 @@ describe GroupMessage do
   before do
     Discourse.stubs(:system_user).returns(admin)
   end
-
-  subject(:send_group_message) { GroupMessage.create(moderators_group, :user_automatically_silenced, user: user) }
 
   describe 'not sent recently' do
     before { GroupMessage.any_instance.stubs(:sent_recently?).returns(false) }
@@ -43,8 +42,8 @@ describe GroupMessage do
   end
 
   describe 'sent recently' do
-    before  { GroupMessage.any_instance.stubs(:sent_recently?).returns(true) }
     subject { GroupMessage.create(moderators_group, :user_automatically_silenced, user: user) }
+    before  { GroupMessage.any_instance.stubs(:sent_recently?).returns(true) }
 
     it { is_expected.to eq(false) }
 
@@ -75,8 +74,8 @@ describe GroupMessage do
   end
 
   describe 'methods that use redis' do
-    let(:user)              { Fabricate.build(:user, id: 123123) }
     subject(:group_message) { GroupMessage.new(moderators_group, :user_automatically_silenced, user: user) }
+    let(:user)              { Fabricate.build(:user, id: 123123) }
     before do
       PostCreator.stubs(:create).returns(stub_everything)
       group_message.stubs(:sent_recently_key).returns('the_key')

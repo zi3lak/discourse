@@ -11,11 +11,10 @@ describe DiscourseUpdates do
     DiscourseUpdates.stubs(:updated_at).returns(updated_at)
   end
 
+  subject { DiscourseUpdates.check_version }
   before do
     Jobs::VersionCheck.any_instance.stubs(:execute).returns(true)
   end
-
-  subject { DiscourseUpdates.check_version }
 
   context 'version check was done at the current installed version' do
     before do

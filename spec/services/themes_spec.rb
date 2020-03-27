@@ -39,8 +39,8 @@ describe ThemesInstallTask do
   end
 
   describe '#theme_exists?' do
-    let(:theme) { Fabricate(:theme) }
     subject { described_class.new(options) }
+    let(:theme) { Fabricate(:theme) }
 
     context 'without branch' do
       let(:options) { github_repo }

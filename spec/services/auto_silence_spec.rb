@@ -12,9 +12,9 @@ describe SpamRule::AutoSilence do
   end
 
   describe 'perform' do
+    subject { described_class.new(post.user) }
     let(:user) { Fabricate.build(:newuser) }
     let(:post) { Fabricate(:post, user: user) }
-    subject { described_class.new(post.user) }
 
     it 'takes no action if user should not be silenced' do
       subject.perform
@@ -32,10 +32,10 @@ describe SpamRule::AutoSilence do
   end
 
   describe 'total_spam_score' do
+    subject { enforcer.user_spam_stats.total_spam_score }
     let(:post) { Fabricate(:post) }
     let(:enforcer) { described_class.new(post.user) }
     let(:flagger) { Fabricate(:user) }
-    subject { enforcer.user_spam_stats.total_spam_score }
 
     it 'returns 0 when there are no flags' do
       expect(subject).to eq(0)
@@ -60,9 +60,9 @@ describe SpamRule::AutoSilence do
   end
 
   describe 'spam_user_count' do
+    subject        { enforcer.user_spam_stats.spam_user_count }
     let(:post)     { Fabricate(:post) }
     let(:enforcer) { described_class.new(post.user) }
-    subject        { enforcer.user_spam_stats.spam_user_count }
 
     it 'returns 0 when there are no flags' do
       expect(subject).to eq(0)
@@ -93,10 +93,10 @@ describe SpamRule::AutoSilence do
   end
 
   describe 'silence_user' do
+    subject       { described_class.new(user) }
     let!(:admin)  { Fabricate(:admin) } # needed for SystemMessage
     let(:user)    { Fabricate(:user) }
     let!(:post)   { Fabricate(:post, user: user) }
-    subject       { described_class.new(user) }
 
     context 'user is not silenced' do
       it 'prevents the user from making new posts' do
@@ -220,8 +220,8 @@ describe SpamRule::AutoSilence do
     end
 
     context "silenced, but has higher trust level now" do
-      let(:user)  { Fabricate(:user, silenced_till: 1.year.from_now, trust_level: TrustLevel[1]) }
       subject     { described_class.new(user) }
+      let(:user)  { Fabricate(:user, silenced_till: 1.year.from_now, trust_level: TrustLevel[1]) }
 
       it 'returns false' do
         expect(subject.should_autosilence?).to eq(false)

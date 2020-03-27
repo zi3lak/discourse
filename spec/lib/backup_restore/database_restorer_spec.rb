@@ -6,8 +6,8 @@ require_relative 'shared_context_for_backup_restore'
 describe BackupRestore::DatabaseRestorer do
   include_context "shared stuff"
 
-  let(:current_db) { RailsMultisite::ConnectionManagement.current_db }
   subject { BackupRestore::DatabaseRestorer.new(logger, current_db) }
+  let(:current_db) { RailsMultisite::ConnectionManagement.current_db }
 
   def expect_create_readonly_functions
     Migration::BaseDropper.expects(:create_readonly_function).at_least_once

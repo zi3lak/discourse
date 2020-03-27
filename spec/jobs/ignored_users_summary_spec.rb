@@ -3,12 +3,11 @@
 require 'rails_helper'
 
 describe Jobs::IgnoredUsersSummary do
+  subject { Jobs::IgnoredUsersSummary.new.execute({}) }
   before do
     SiteSetting.ignored_users_count_message_threshold = 1
     SiteSetting.ignored_users_message_gap_days = 365
   end
-
-  subject { Jobs::IgnoredUsersSummary.new.execute({}) }
 
   context "with no ignored users" do
     it "does nothing" do

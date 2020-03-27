@@ -105,10 +105,9 @@ describe PostRevisor do
   end
 
   context 'revise' do
+    subject { PostRevisor.new(post) }
     let(:post) { Fabricate(:post, post_args) }
     let(:first_version_at) { post.last_version_at }
-
-    subject { PostRevisor.new(post) }
 
     describe 'with the same body' do
       it "doesn't change version" do

@@ -82,8 +82,8 @@ describe UserNotifications do
   end
 
   describe '.email_login' do
-    let(:email_token) { user.email_tokens.create!(email: user.email).token }
     subject { UserNotifications.email_login(user, email_token: email_token) }
+    let(:email_token) { user.email_tokens.create!(email: user.email).token }
 
     it "generates the right email" do
       expect(subject.to).to eq([user.email])

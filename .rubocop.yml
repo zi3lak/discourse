@@ -253,7 +253,7 @@ RSpec/IteratedExpectation:
   Enabled: false # To be decided
 
 RSpec/LeadingSubject:
-  Enabled: false # TODO
+  Enabled: true
 
 RSpec/LeakyConstantDeclaration:
   Enabled: false # To be decided

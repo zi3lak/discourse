@@ -6,8 +6,8 @@ describe UserAnonymizer do
   let(:admin) { Fabricate(:admin) }
 
   describe "event" do
-    let(:user) { Fabricate(:user, username: "edward") }
     subject(:make_anonymous) { described_class.make_anonymous(user, admin, anonymize_ip: '2.2.2.2') }
+    let(:user) { Fabricate(:user, username: "edward") }
 
     it "triggers the event" do
       events = DiscourseEvent.track_events do
@@ -24,10 +24,10 @@ describe UserAnonymizer do
   end
 
   describe "make_anonymous" do
+    subject(:make_anonymous) { described_class.make_anonymous(user, admin) }
     let(:original_email) { "edward@example.net" }
     let(:user) { Fabricate(:user, username: "edward", email: original_email) }
     fab!(:another_user) { Fabricate(:evil_trout) }
-    subject(:make_anonymous) { described_class.make_anonymous(user, admin) }
 
     it "changes username" do
       make_anonymous

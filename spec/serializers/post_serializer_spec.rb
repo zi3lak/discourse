@@ -70,14 +70,13 @@ describe PostSerializer do
   end
 
   context "a post by a nuked user" do
+    subject { PostSerializer.new(post, scope: Guardian.new(Fabricate(:admin)), root: false).as_json }
     before do
       post.update!(
         user_id: nil,
         deleted_at: Time.zone.now
       )
     end
-
-    subject { PostSerializer.new(post, scope: Guardian.new(Fabricate(:admin)), root: false).as_json }
 
     it "serializes correctly" do
       [:name, :username, :display_username, :avatar_template, :user_title, :trust_level].each do |attr|

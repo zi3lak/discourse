@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe TopicUploadSecurityManager do
+  subject { described_class.new(topic) }
   let(:group) { Fabricate(:group) }
   let(:category) { Fabricate(:category) }
   let!(:topic) { Fabricate(:topic, user: user, category: category) }
@@ -11,8 +12,6 @@ describe TopicUploadSecurityManager do
   let!(:post2) { Fabricate(:post, topic: topic) }
   let!(:post3) { Fabricate(:post, topic: topic) }
   let!(:post4) { Fabricate(:post, topic: topic) }
-
-  subject { described_class.new(topic) }
 
   context "when a topic has posts linked to secure uploads" do
     let!(:upload) { Fabricate(:secure_upload) }

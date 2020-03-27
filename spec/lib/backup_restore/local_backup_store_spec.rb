@@ -5,6 +5,7 @@ require 'backup_restore/local_backup_store'
 require_relative 'shared_examples_for_backup_store'
 
 describe BackupRestore::LocalBackupStore do
+  subject(:store) { BackupRestore::BackupStore.create(root_directory: @root_directory) }
   before(:all) do
     @root_directory = Dir.mktmpdir
     @paths = []
@@ -18,7 +19,6 @@ describe BackupRestore::LocalBackupStore do
     SiteSetting.backup_location = BackupLocationSiteSetting::LOCAL
   end
 
-  subject(:store) { BackupRestore::BackupStore.create(root_directory: @root_directory) }
   let(:expected_type) { BackupRestore::LocalBackupStore }
 
   it_behaves_like "backup store"

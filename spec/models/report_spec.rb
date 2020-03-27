@@ -48,6 +48,7 @@ describe Report do
 
   describe "counting" do
     describe "requests" do
+      subject(:json) { Report.find("http_total_reqs").as_json }
       before do
         freeze_time DateTime.parse('2017-03-01 12:00')
 
@@ -64,8 +65,6 @@ describe Report do
 
         ApplicationRequest.insert_all(application_requests)
       end
-
-      subject(:json) { Report.find("http_total_reqs").as_json }
 
       it "counts the correct records" do
         expect(json[:data].size).to eq(31) # today and 30 full days

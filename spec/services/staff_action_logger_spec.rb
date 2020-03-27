@@ -18,9 +18,8 @@ describe StaffActionLogger do
   end
 
   describe 'log_user_deletion' do
-    fab!(:deleted_user) { Fabricate(:user) }
-
     subject(:log_user_deletion) { described_class.new(admin).log_user_deletion(deleted_user) }
+    fab!(:deleted_user) { Fabricate(:user) }
 
     it 'raises an error when user is nil' do
       expect { logger.log_user_deletion(nil) }.to raise_error(Discourse::InvalidParameters)
@@ -111,11 +110,10 @@ describe StaffActionLogger do
   end
 
   describe 'log_trust_level_change' do
+    subject(:log_trust_level_change) { described_class.new(admin).log_trust_level_change(user, old_trust_level, new_trust_level) }
     fab!(:user) { Fabricate(:user) }
     let(:old_trust_level) { TrustLevel[0] }
     let(:new_trust_level) { TrustLevel[1] }
-
-    subject(:log_trust_level_change) { described_class.new(admin).log_trust_level_change(user, old_trust_level, new_trust_level) }
 
     it 'raises an error when user or trust level is nil' do
       expect { logger.log_trust_level_change(nil, old_trust_level, new_trust_level) }.to raise_error(Discourse::InvalidParameters)
@@ -308,8 +306,8 @@ describe StaffActionLogger do
   end
 
   describe 'log_roll_up' do
-    let(:subnets) { ["1.2.3.0/24", "42.42.42.0/24"] }
     subject(:log_roll_up) { described_class.new(admin).log_roll_up(subnets) }
+    let(:subnets) { ["1.2.3.0/24", "42.42.42.0/24"] }
 
     it 'creates a new UserHistory record' do
       log_record = logger.log_roll_up(subnets)

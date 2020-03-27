@@ -453,8 +453,8 @@ describe Invite do
   end
 
   describe '.invalidate_for_email' do
-    let(:email) { 'invite.me@example.com' }
     subject { described_class.invalidate_for_email(email) }
+    let(:email) { 'invite.me@example.com' }
 
     it 'returns nil if there is no invite for the given email' do
       expect(subject).to eq(nil)

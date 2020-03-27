@@ -79,8 +79,8 @@ describe UserDestroyer do
     end
 
     context 'user deletes self' do
-      let(:destroy_opts) { { delete_posts: true, context: "/u/username/preferences/account" } }
       subject(:destroy) { UserDestroyer.new(@user).destroy(@user, destroy_opts) }
+      let(:destroy_opts) { { delete_posts: true, context: "/u/username/preferences/account" } }
 
       include_examples "successfully destroy a user"
 
@@ -218,12 +218,12 @@ describe UserDestroyer do
     end
 
     context 'user has no posts, but user_stats table has post_count > 0' do
+      subject(:destroy) { UserDestroyer.new(@user).destroy(@user, delete_posts: false) }
       before do
         # out of sync user_stat data shouldn't break UserDestroyer
         @user.user_stat.update_attribute(:post_count, 1)
       end
       let(:destroy_opts) { {} }
-      subject(:destroy) { UserDestroyer.new(@user).destroy(@user, delete_posts: false) }
 
       include_examples "successfully destroy a user"
     end
@@ -238,8 +238,8 @@ describe UserDestroyer do
 
     context 'user has no posts' do
       context 'and destroy succeeds' do
-        let(:destroy_opts) { {} }
         subject(:destroy) { UserDestroyer.new(@admin).destroy(@user) }
+        let(:destroy_opts) { {} }
 
         include_examples "successfully destroy a user"
         include_examples "email block list"
