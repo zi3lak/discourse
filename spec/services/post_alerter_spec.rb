@@ -347,12 +347,28 @@ describe PostAlerter do
   end
 
   context '@mentions' do
-
     let(:mention_post) { create_post_with_alerts(user: user, raw: 'Hello @eviltrout') }
     let(:topic) { mention_post.topic }
 
+    fab!(:alice) { Fabricate(:user, username: 'alice') }
+    fab!(:bob) { Fabricate(:user, username: 'bob') }
+    fab!(:carol) { Fabricate(:admin, username: 'carol') }
+    fab!(:dave) { Fabricate(:user, username: 'dave') }
+    fab!(:eve) { Fabricate(:user, username: 'eve') }
+    fab!(:group) { Fabricate(:group, name: 'group', mentionable_level: Group::ALIAS_LEVELS[:everyone]) }
+
+    def create_post_with_alerts(args = {})
+      post = Fabricate(:post, args)
+      PostAlerter.post_created(post)
+    end
+
+    def set_topic_notification_level(user, topic, level_name)
+      TopicUser.change(user.id, topic.id, notification_level: TopicUser.notification_levels[level_name])
+    end
+
     before do
       Jobs.run_immediately!
+      group.bulk_add([alice.id, eve.id])
     end
 
     it 'notifies a user' do
@@ -398,26 +414,6 @@ describe PostAlerter do
       expect {
         post.revise(evil_trout, raw: "O hai, @eviltrout!")
       }.not_to change(evil_trout.notifications, :count)
-    end
-
-    fab!(:alice) { Fabricate(:user, username: 'alice') }
-    fab!(:bob) { Fabricate(:user, username: 'bob') }
-    fab!(:carol) { Fabricate(:admin, username: 'carol') }
-    fab!(:dave) { Fabricate(:user, username: 'dave') }
-    fab!(:eve) { Fabricate(:user, username: 'eve') }
-    fab!(:group) { Fabricate(:group, name: 'group', mentionable_level: Group::ALIAS_LEVELS[:everyone]) }
-
-    before do
-      group.bulk_add([alice.id, eve.id])
-    end
-
-    def create_post_with_alerts(args = {})
-      post = Fabricate(:post, args)
-      PostAlerter.post_created(post)
-    end
-
-    def set_topic_notification_level(user, topic, level_name)
-      TopicUser.change(user.id, topic.id, notification_level: TopicUser.notification_levels[level_name])
     end
 
     context "topic" do

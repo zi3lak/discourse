@@ -7,12 +7,12 @@ RSpec.describe Admin::UsersController do
   fab!(:admin) { Fabricate(:admin) }
   fab!(:user) { Fabricate(:user) }
 
-  it 'is a subclass of AdminController' do
-    expect(Admin::UsersController < Admin::AdminController).to eq(true)
-  end
-
   before do
     sign_in(admin)
+  end
+
+  it 'is a subclass of AdminController' do
+    expect(Admin::UsersController < Admin::AdminController).to eq(true)
   end
 
   describe '#index' do

@@ -3,16 +3,15 @@
 require 'rails_helper'
 
 describe Admin::PermalinksController do
+  before do
+    sign_in(admin)
+  end
 
   it "is a subclass of AdminController" do
     expect(Admin::PermalinksController < Admin::AdminController).to eq(true)
   end
 
   fab!(:admin) { Fabricate(:admin) }
-
-  before do
-    sign_in(admin)
-  end
 
   describe '#index' do
     it 'filters url' do

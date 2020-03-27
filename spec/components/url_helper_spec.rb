@@ -152,6 +152,10 @@ describe UrlHelper do
       SiteSetting.login_required = true
     end
 
+    after do
+      Rails.configuration.action_controller.asset_host = nil
+    end
+
     def cooked
       UrlHelper.cook_url(url, secure: secure)
     end
@@ -174,10 +178,6 @@ describe UrlHelper do
           "//s3bucket.s3.dualstack.us-east-1.amazonaws.com/dev/original/3X/2/e/2e6f2ef81b6910ea592cd6d21ee897cd51cf72e4.jpeg"
         )
       end
-    end
-
-    after do
-      Rails.configuration.action_controller.asset_host = nil
     end
   end
 

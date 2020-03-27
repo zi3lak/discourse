@@ -226,7 +226,7 @@ RSpec/HookArgument:
   Enabled: false # TODO
 
 RSpec/HooksBeforeExamples:
-  Enabled: false # TODO
+  Enabled: true
 
 RSpec/ImplicitBlockExpectation:
   Enabled: true

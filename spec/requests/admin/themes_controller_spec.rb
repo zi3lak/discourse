@@ -5,12 +5,12 @@ require 'rails_helper'
 describe Admin::ThemesController do
   fab!(:admin) { Fabricate(:admin) }
 
-  it "is a subclass of AdminController" do
-    expect(Admin::UsersController < Admin::AdminController).to eq(true)
-  end
-
   before do
     sign_in(admin)
+  end
+
+  it "is a subclass of AdminController" do
+    expect(Admin::UsersController < Admin::AdminController).to eq(true)
   end
 
   describe '#generate_key_pair' do

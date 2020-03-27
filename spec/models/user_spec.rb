@@ -2022,6 +2022,10 @@ describe User do
         TranslationOverride.upsert!(I18n.locale, Badge.i18n_key(badge.name), customized_badge_name)
       end
 
+      after do
+        TranslationOverride.revert!(I18n.locale, Badge.i18n_key(badge.name))
+      end
+
       it 'sets badge_granted_title correctly' do
         BadgeGranter.grant(badge, user)
 
@@ -2029,10 +2033,6 @@ describe User do
         user.update!(title: customized_badge_name)
         expect(user.user_profile.reload.badge_granted_title).to eq(true)
         expect(user.user_profile.reload.granted_title_badge_id).to eq(badge.id)
-      end
-
-      after do
-        TranslationOverride.revert!(I18n.locale, Badge.i18n_key(badge.name))
       end
     end
   end

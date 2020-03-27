@@ -211,6 +211,10 @@ describe BadgeGranter do
         TranslationOverride.upsert!(I18n.locale, Badge.i18n_key(badge.name), customized_badge_name)
       end
 
+      after do
+        TranslationOverride.revert!(I18n.locale, Badge.i18n_key(badge.name))
+      end
+
       it 'revokes the badge and title and does necessary cleanup' do
         user.title = customized_badge_name; user.save!
         expect(badge.reload.grant_count).to eq(1)
@@ -225,10 +229,6 @@ describe BadgeGranter do
         expect(badge.reload.grant_count).to eq(0)
         expect(user.notifications.where(notification_type: Notification.types[:granted_badge])).to be_empty
         expect(user.reload.title).to eq(nil)
-      end
-
-      after do
-        TranslationOverride.revert!(I18n.locale, Badge.i18n_key(badge.name))
       end
     end
   end

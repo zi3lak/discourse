@@ -7,6 +7,15 @@ describe Group do
   let(:user) { Fabricate(:user) }
   let(:group) { Fabricate(:group) }
 
+  # UGLY but perf is horrible with this callback
+  before do
+    User.set_callback(:create, :after, :ensure_in_trust_level_group)
+  end
+
+  after do
+    User.skip_callback(:create, :after, :ensure_in_trust_level_group)
+  end
+
   context 'validations' do
     describe '#grant_trust_level' do
       describe 'when trust level is not valid' do
@@ -81,14 +90,6 @@ describe Group do
         expect(@builtin[:trust_level_2]).to eq(4)
       end
     end
-  end
-
-  # UGLY but perf is horrible with this callback
-  before do
-    User.set_callback(:create, :after, :ensure_in_trust_level_group)
-  end
-  after do
-    User.skip_callback(:create, :after, :ensure_in_trust_level_group)
   end
 
   describe "validation" do

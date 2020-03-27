@@ -37,14 +37,14 @@ describe Jobs::BulkUserTitleUpdate do
       user.update(title: customized_badge_name)
     end
 
+    after do
+      TranslationOverride.revert!(I18n.locale, Badge.i18n_key(badge.name))
+    end
+
     it 'updates the title of all users back to the original badge name' do
       expect(user.reload.title).to eq(customized_badge_name)
       described_class.new.execute(granted_badge_id: badge.id, action: described_class::RESET_ACTION)
       expect(user.reload.title).to eq('Protector of the Realm')
-    end
-
-    after do
-      TranslationOverride.revert!(I18n.locale, Badge.i18n_key(badge.name))
     end
   end
 end

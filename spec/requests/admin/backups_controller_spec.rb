@@ -25,10 +25,6 @@ RSpec.describe Admin::BackupsController do
     end.to_h
   end
 
-  it "is a subclass of AdminController" do
-    expect(Admin::BackupsController < Admin::AdminController).to eq(true)
-  end
-
   before do
     sign_in(admin)
     SiteSetting.backup_location = BackupLocationSiteSetting::LOCAL
@@ -39,6 +35,10 @@ RSpec.describe Admin::BackupsController do
 
     @paths&.each { |path| File.delete(path) if File.exists?(path) }
     @paths = nil
+  end
+
+  it "is a subclass of AdminController" do
+    expect(Admin::BackupsController < Admin::AdminController).to eq(true)
   end
 
   describe "#index" do

@@ -750,8 +750,6 @@ describe Report do
     include_examples 'no data'
 
     context 'with data' do
-      include_examples 'with data x/y'
-
       before(:each) do
         user = Fabricate(:user)
         topic = Fabricate(:topic, user: user)
@@ -764,6 +762,8 @@ describe Report do
         PostActionCreator.off_topic(user, post2)
         PostActionCreator.create(user, post3, :off_topic, created_at: 45.days.ago)
       end
+
+      include_examples 'with data x/y'
 
       context "with category filtering" do
         let(:report) { Report.find('flags', filters: { category: c1.id }) }
@@ -785,8 +785,6 @@ describe Report do
     include_examples 'no data'
 
     context 'with data' do
-      include_examples 'with data x/y'
-
       before(:each) do
         user = Fabricate(:user)
         Fabricate(:topic, user: user)
@@ -794,6 +792,7 @@ describe Report do
         Fabricate(:topic, user: user)
         Fabricate(:topic, created_at: 45.days.ago, user: user)
       end
+      include_examples 'with data x/y'
 
       context "with category filtering" do
         let(:report) { Report.find('topics', filters: { category: c1.id }) }
@@ -874,8 +873,6 @@ describe Report do
     include_examples 'no data'
 
     context 'with data' do
-      include_examples 'with data x/y'
-
       before(:each) do
         user = Fabricate(:user)
         topic = Fabricate(:topic, user: user)
@@ -885,6 +882,8 @@ describe Report do
         Fabricate(:post, topic: topic, user: user)
         Fabricate(:post, created_at: 45.days.ago, topic: topic, user: user)
       end
+
+      include_examples 'with data x/y'
 
       context "with category filtering" do
         let(:report) { Report.find('posts', filters: { category: c1.id }) }
@@ -908,8 +907,6 @@ describe Report do
     include_examples 'no data'
 
     context 'with data' do
-      include_examples 'with data x/y'
-
       before(:each) do
         user = Fabricate(:user)
         Fabricate(:topic, category: c1, user: user)
@@ -917,6 +914,8 @@ describe Report do
         Fabricate(:topic, user: user)
         Fabricate(:topic, created_at: 45.days.ago, user: user)
       end
+
+      include_examples 'with data x/y'
 
       context "with category filtering" do
         let(:report) { Report.find('topics_with_no_response', filters: { category: c1.id }) }
@@ -938,8 +937,6 @@ describe Report do
     include_examples 'no data'
 
     context 'with data' do
-      include_examples 'with data x/y'
-
       before(:each) do
         topic = Fabricate(:topic, category: c1)
         post = Fabricate(:post, topic: topic)
@@ -953,6 +950,8 @@ describe Report do
           pa.created_at = 45.days.ago
         end.save!
       end
+
+      include_examples 'with data x/y'
 
       context "with category filtering" do
         let(:report) { Report.find('likes', filters: { category: c1.id }) }

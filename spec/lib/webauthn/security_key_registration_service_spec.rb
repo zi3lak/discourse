@@ -91,16 +91,16 @@ describe Webauthn::SecurityKeyRegistrationService do
       end
     end
 
-    it 'raises a UnsupportedPublicKeyAlgorithmError' do
-      expect { subject.register_second_factor_security_key }.to raise_error(
-        Webauthn::UnsupportedPublicKeyAlgorithmError, I18n.t('webauthn.validation.unsupported_public_key_algorithm_error')
-      )
-    end
-
     after do
       silence_warnings do
         Webauthn::SUPPORTED_ALGORITHMS = @original_supported_alg_value
       end
+    end
+
+    it 'raises a UnsupportedPublicKeyAlgorithmError' do
+      expect { subject.register_second_factor_security_key }.to raise_error(
+        Webauthn::UnsupportedPublicKeyAlgorithmError, I18n.t('webauthn.validation.unsupported_public_key_algorithm_error')
+      )
     end
   end
 
@@ -112,16 +112,16 @@ describe Webauthn::SecurityKeyRegistrationService do
       end
     end
 
-    it 'raises a UnsupportedAttestationFormatError' do
-      expect { subject.register_second_factor_security_key }.to raise_error(
-        Webauthn::UnsupportedAttestationFormatError, I18n.t('webauthn.validation.unsupported_attestation_format_error')
-      )
-    end
-
     after do
       silence_warnings do
         Webauthn::VALID_ATTESTATION_FORMATS = @original_supported_alg_value
       end
+    end
+
+    it 'raises a UnsupportedAttestationFormatError' do
+      expect { subject.register_second_factor_security_key }.to raise_error(
+        Webauthn::UnsupportedAttestationFormatError, I18n.t('webauthn.validation.unsupported_attestation_format_error')
+      )
     end
   end
 

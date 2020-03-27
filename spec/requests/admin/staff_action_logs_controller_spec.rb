@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 describe Admin::StaffActionLogsController do
+  before do
+    sign_in(admin)
+  end
+
   it "is a subclass of AdminController" do
     expect(Admin::StaffActionLogsController < Admin::AdminController).to eq(true)
   end
 
   fab!(:admin) { Fabricate(:admin) }
-
-  before do
-    sign_in(admin)
-  end
 
   describe '#index' do
     it 'generates logs' do

@@ -726,12 +726,12 @@ describe PostsController do
   end
 
   describe '#create' do
-    include_examples 'action requires login', :post, "/posts.json"
-
     before do
       SiteSetting.min_first_post_typing_time = 0
       SiteSetting.enable_whispers = true
     end
+
+    include_examples 'action requires login', :post, "/posts.json"
 
     context 'api' do
       it 'memoizes duplicate requests' do

@@ -484,6 +484,10 @@ RSpec.describe Users::OmniauthCallbacksController do
           cookies['fsl'] = true
         end
 
+        after do
+          cookies.delete('fsl')
+        end
+
         it "doesn't attempt redirect to external origin" do
           post "/auth/google_oauth2?origin=https://example.com/external"
           get "/auth/google_oauth2/callback"
@@ -550,10 +554,6 @@ RSpec.describe Users::OmniauthCallbacksController do
           log_out_user(provider)
 
           expect(cookies['authentication_data']).to be_nil
-        end
-
-        after do
-          cookies.delete('fsl')
         end
       end
     end
