@@ -3,7 +3,7 @@ import {
   addRawTemplate,
   removeRawTemplate,
 } from "discourse-common/lib/raw-templates";
-import compile from "handlebars-compiler";
+import hbs from "htmlbars-inline-precompile";
 import { test } from "qunit";
 import { visit } from "@ember/test-helpers";
 
@@ -14,7 +14,7 @@ acceptance("Raw Plugin Outlet", function (needs) {
   needs.hooks.beforeEach(() => {
     addRawTemplate(
       CONNECTOR,
-      compile(`<span class='topic-lala'>{{context.topic.id}}</span>`)
+      hbs`<span class='topic-lala'>{{context.topic.id}}</span>`
     );
   });
 
