@@ -17,11 +17,17 @@ export default Mixin.create({
         const filterType = this.filterType;
 
         if (category) {
-          const noSubcategories = this.noSubcategories;
+          let subcategoryFilter = "";
 
-          return `c/${Category.slugFor(category)}${
-            noSubcategories ? "/none" : ""
-          }/l/${filterType}`;
+          if (this.noSubcategories === true) {
+            subcategoryFilter = "/none";
+          } else if (this.noSubcategories === false) {
+            subcategoryFilter = "/all";
+          }
+
+          return `c/${Category.slugFor(
+            category
+          )}${subcategoryFilter}/l/${filterType}`;
         } else {
           return filterType;
         }

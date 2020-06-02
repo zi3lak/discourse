@@ -13,12 +13,16 @@ export default {
     app.DiscoveryCategoryController = DiscoverySortableController.extend();
     app.DiscoveryParentCategoryController = DiscoverySortableController.extend();
     app.DiscoveryCategoryNoneController = DiscoverySortableController.extend();
+    app.DiscoveryCategoryAllController = DiscoverySortableController.extend();
     app.DiscoveryCategoryWithIDController = DiscoverySortableController.extend();
 
     app.DiscoveryCategoryRoute = buildCategoryRoute("default");
     app.DiscoveryParentCategoryRoute = buildCategoryRoute("default");
     app.DiscoveryCategoryNoneRoute = buildCategoryRoute("default", {
       no_subcategories: true
+    });
+    app.DiscoveryCategoryAllRoute = buildCategoryRoute("default", {
+      no_subcategories: false
     });
     app.DiscoveryCategoryWithIDRoute = buildCategoryRoute("default");
 
@@ -37,6 +41,9 @@ export default {
       app[
         `Discovery${filterCapitalized}CategoryNoneController`
       ] = DiscoverySortableController.extend();
+      app[
+        `Discovery${filterCapitalized}CategoryAllController`
+      ] = DiscoverySortableController.extend();
       app[`Discovery${filterCapitalized}Route`] = buildTopicRoute(filter);
       app[`Discovery${filterCapitalized}CategoryRoute`] = buildCategoryRoute(
         filter
@@ -47,12 +54,16 @@ export default {
       app[
         `Discovery${filterCapitalized}CategoryNoneRoute`
       ] = buildCategoryRoute(filter, { no_subcategories: true });
+      app[
+        `Discovery${filterCapitalized}CategoryAllRoute`
+      ] = buildCategoryRoute(filter, { no_subcategories: false });
     });
 
     Discourse.DiscoveryTopController = DiscoverySortableController.extend();
     Discourse.DiscoveryTopCategoryController = DiscoverySortableController.extend();
     Discourse.DiscoveryTopParentCategoryController = DiscoverySortableController.extend();
     Discourse.DiscoveryTopCategoryNoneController = DiscoverySortableController.extend();
+    Discourse.DiscoveryTopCategoryAllController = DiscoverySortableController.extend();
 
     Discourse.DiscoveryTopRoute = buildTopicRoute("top", {
       actions: {
@@ -67,6 +78,9 @@ export default {
     Discourse.DiscoveryTopParentCategoryRoute = buildCategoryRoute("top");
     Discourse.DiscoveryTopCategoryNoneRoute = buildCategoryRoute("top", {
       no_subcategories: true
+    });
+    Discourse.DiscoveryTopCategoryAllRoute = buildCategoryRoute("top", {
+      no_subcategories: false
     });
 
     site.get("periods").forEach(period => {
@@ -83,6 +97,9 @@ export default {
       app[
         `DiscoveryTop${periodCapitalized}CategoryNoneController`
       ] = DiscoverySortableController.extend();
+      app[
+        `DiscoveryTop${periodCapitalized}CategoryAllController`
+      ] = DiscoverySortableController.extend();
       app[`DiscoveryTop${periodCapitalized}Route`] = buildTopicRoute(
         "top/" + period
       );
@@ -95,11 +112,17 @@ export default {
       app[
         `DiscoveryTop${periodCapitalized}CategoryNoneRoute`
       ] = buildCategoryRoute("top/" + period, { no_subcategories: true });
+      app[
+        `DiscoveryTop${periodCapitalized}CategoryAllRoute`
+      ] = buildCategoryRoute("top/" + period, { no_subcategories: false });
     });
 
     app["TagsShowCategoryRoute"] = TagsShowRoute.extend();
     app["TagsShowCategoryNoneRoute"] = TagsShowRoute.extend({
       noSubcategories: true
+    });
+    app["TagsShowCategoryAllRoute"] = TagsShowRoute.extend({
+      noSubcategories: false
     });
     app["TagsShowParentCategoryRoute"] = TagsShowRoute.extend();
 
@@ -118,6 +141,9 @@ export default {
       app[
         "TagsShowNoneCategory" + filter.capitalize() + "Route"
       ] = TagsShowRoute.extend({ navMode: filter, noSubcategories: true });
+      app[
+        "TagsShowAllCategory" + filter.capitalize() + "Route"
+      ] = TagsShowRoute.extend({ navMode: filter, noSubcategories: false });
       app[
         "TagsShowParentCategory" + filter.capitalize() + "Route"
       ] = TagsShowRoute.extend({ navMode: filter });

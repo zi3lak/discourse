@@ -30,6 +30,9 @@ export default function() {
     this.route("topCategoryNone", {
       path: "/c/*category_slug_path_with_id/none/l/top"
     });
+    this.route("topCategoryAll", {
+      path: "/c/*category_slug_path_with_id/all/l/top"
+    });
     this.route("topCategory", { path: "/c/*category_slug_path_with_id/l/top" });
 
     // top by periods
@@ -42,6 +45,9 @@ export default function() {
       this.route(top, { path: "/top/" + period });
       this.route(top + "CategoryNone", {
         path: "/c/*category_slug_path_with_id/none/l/top/" + period
+      });
+      this.route(top + "CategoryAll", {
+        path: "/c/*category_slug_path_with_id/all/l/top/" + period
       });
       this.route(top + "Category", {
         path: "/c/*category_slug_path_with_id/l/top/" + period
@@ -57,6 +63,9 @@ export default function() {
       this.route(filter + "CategoryNone", {
         path: "/c/*category_slug_path_with_id/none/l/" + filter
       });
+      this.route(filter + "CategoryAll", {
+        path: "/c/*category_slug_path_with_id/all/l/" + filter
+      });
       this.route(filter + "Category", {
         path: "/c/*category_slug_path_with_id/l/" + filter
       });
@@ -70,6 +79,7 @@ export default function() {
 
     // default filter for a category
     this.route("categoryNone", { path: "/c/*category_slug_path_with_id/none" });
+    this.route("categoryAll", { path: "/c/*category_slug_path_with_id/all" });
     this.route("category", { path: "/c/*category_slug_path_with_id" });
   });
 
@@ -229,6 +239,9 @@ export default function() {
     this.route("showCategoryNone", {
       path: "/c/*category_slug_path_with_id/none/:tag_id"
     });
+    this.route("showCategoryAll", {
+      path: "/c/*category_slug_path_with_id/all/:tag_id"
+    });
 
     Site.currentProp("filters").forEach(filter => {
       this.route("showCategory" + filter.capitalize(), {
@@ -236,6 +249,9 @@ export default function() {
       });
       this.route("showCategoryNone" + filter.capitalize(), {
         path: "/c/*category_slug_path_with_id/none/:tag_id/l/" + filter
+      });
+      this.route("showCategoryAll" + filter.capitalize(), {
+        path: "/c/*category_slug_path_with_id/all/:tag_id/l/" + filter
       });
     });
     this.route("intersection", {

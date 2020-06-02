@@ -18,7 +18,7 @@ export default (filterArg, params) => {
 
     serialize(modelParams) {
       if (!modelParams.category_slug_path_with_id) {
-        if (modelParams.id === "none") {
+        if (modelParams.id === "none" || modelParams.id === "all") {
           const category_slug_path_with_id = [
             modelParams.parentSlug,
             modelParams.slug
@@ -26,7 +26,8 @@ export default (filterArg, params) => {
           const category = Category.findBySlugPathWithID(
             category_slug_path_with_id
           );
-          this.replaceWith("discovery.categoryNone", {
+          const routeSuffix = modelParams.id === "none" ? "None" : "All";
+          this.replaceWith(`discovery.category${routeSuffix}`, {
             category,
             category_slug_path_with_id
           });

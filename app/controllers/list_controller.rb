@@ -11,12 +11,15 @@ class ListController < ApplicationController
     # filtered topics lists
     Discourse.filters.map { |f| :"category_#{f}" },
     Discourse.filters.map { |f| :"category_none_#{f}" },
+    Discourse.filters.map { |f| :"category_all_#{f}" },
     # top summaries
     :category_top,
     :category_none_top,
+    :category_all_top,
     # top pages (ie. with a period)
     TopTopic.periods.map { |p| :"category_top_#{p}" },
     TopTopic.periods.map { |p| :"category_none_top_#{p}" },
+    TopTopic.periods.map { |p| :"category_all_top_#{p}" },
     # category feeds
     :category_feed,
   ].flatten
@@ -30,6 +33,7 @@ class ListController < ApplicationController
     :category_default,
     Discourse.anonymous_filters.map { |f| :"category_#{f}" },
     Discourse.anonymous_filters.map { |f| :"category_none_#{f}" },
+    Discourse.anonymous_filters.map { |f| :"category_all_#{f}" },
     # category feeds
     :category_feed,
     # user topics feed
@@ -38,11 +42,13 @@ class ListController < ApplicationController
     :top,
     :category_top,
     :category_none_top,
+    :category_all_top,
     # top pages (ie. with a period)
     TopTopic.periods.map { |p| :"top_#{p}" },
     TopTopic.periods.map { |p| :"top_#{p}_feed" },
     TopTopic.periods.map { |p| :"category_top_#{p}" },
     TopTopic.periods.map { |p| :"category_none_top_#{p}" },
+    TopTopic.periods.map { |p| :"category_all_top_#{p}" },
     :group_topics
   ].flatten
 
@@ -107,6 +113,10 @@ class ListController < ApplicationController
 
     define_method("category_none_#{filter}") do
       self.public_send(filter, category: @category.id, no_subcategories: true)
+    end
+
+    define_method("category_all_#{filter}") do
+      self.public_send(filter, category: @category.id, no_subcategories: false)
     end
   end
 
@@ -232,6 +242,10 @@ class ListController < ApplicationController
     top(category: @category.id, no_subcategories: true)
   end
 
+  def category_all_top
+    top(category: @category.id, no_subcategories: false)
+  end
+
   TopTopic.periods.each do |period|
     define_method("top_#{period}") do |options = nil|
       top_options = build_topic_list_options
@@ -260,6 +274,13 @@ class ListController < ApplicationController
       self.public_send("top_#{period}",
         category: @category.id,
         no_subcategories: true
+      )
+    end
+
+    define_method("category_all_top_#{period}") do
+      self.public_send("top_#{period}",
+        category: @category.id,
+        no_subcategories: false
       )
     end
 

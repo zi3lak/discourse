@@ -171,9 +171,9 @@ NavItem.reopenClass({
     if (opts.persistedQueryParams) {
       args.persistedQueryParams = opts.persistedQueryParams;
     }
-    if (opts.noSubcategories) {
-      args.noSubcategories = true;
-    }
+    // if (opts.noSubcategories) {
+    args.noSubcategories = opts.noSubcategories;
+    // }
     NavItem.extraArgsCallbacks.forEach(cb =>
       _.merge(args, cb.call(this, filterType, opts))
     );

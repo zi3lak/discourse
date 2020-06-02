@@ -672,15 +672,19 @@ Discourse::Application.routes.draw do
   scope path: 'c/*category_slug_path_with_id' do
     get "/none" => "list#category_none_latest"
     get "/none/l/top" => "list#category_none_top", as: "category_none_top"
+    get "/all" => "list#category_all_latest"
+    get "/all/l/top" => "list#category_all_top", as: "category_all_top"
     get "/l/top" => "list#category_top", as: "category_top"
 
     TopTopic.periods.each do |period|
       get "/none/l/top/#{period}" => "list#category_none_top_#{period}", as: "category_none_top_#{period}"
+      get "/all/l/top/#{period}" => "list#category_all_top_#{period}", as: "category_all_top_#{period}"
       get "/l/top/#{period}" => "list#category_top_#{period}", as: "category_top_#{period}"
     end
 
     Discourse.filters.each do |filter|
       get "/none/l/#{filter}" => "list#category_none_#{filter}", as: "category_none_#{filter}"
+      get "/all/l/#{filter}" => "list#category_all_#{filter}", as: "category_all_#{filter}"
       get "/l/#{filter}" => "list#category_#{filter}", as: "category_#{filter}"
     end
 
@@ -892,9 +896,11 @@ Discourse::Application.routes.draw do
       scope path: '/c/*category_slug_path_with_id' do
         Discourse.filters.each do |filter|
           get "/none/:tag_id/l/#{filter}" => "tags#show_#{filter}", as: "tag_category_none_show_#{filter}", defaults: { no_subcategories: true }
+          get "/all/:tag_id/l/#{filter}" => "tags#show_#{filter}", as: "tag_category_all_show_#{filter}", defaults: { no_subcategories: false }
         end
 
         get '/none/:tag_id' => 'tags#show', as: 'tag_category_none_show', defaults: { no_subcategories: true }
+        get '/all/:tag_id' => 'tags#show', as: 'tag_category_all_show', defaults: { no_subcategories: false }
 
         Discourse.filters.each do |filter|
           get "/:tag_id/l/#{filter}" => "tags#show_#{filter}", as: "tag_category_show_#{filter}"
