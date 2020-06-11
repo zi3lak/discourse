@@ -51,7 +51,11 @@ export default Controller.extend({
 
   @discourseComputed("order", "asc", "filter")
   memberParams(order, asc, filter) {
-    return { order, asc, filter };
+    return {
+      order,
+      asc,
+      filter
+    };
   },
 
   hasMembers: gt("model.members.length", 0),
@@ -92,6 +96,12 @@ export default Controller.extend({
       case "removeOwner":
         this.removeOwner(member);
         break;
+      case "makePrimary":
+        this.makePrimary(member);
+        break;
+      case "removePrimary":
+        this.removePrimary(member);
+        break;
     }
   },
 
@@ -103,6 +113,16 @@ export default Controller.extend({
   @action
   makeOwner(username) {
     this.model.addOwners(username);
+  },
+
+  @action
+  removePrimary(user) {
+    return this.model.removePrimary(user.id);
+  },
+
+  @action
+  makePrimary(user) {
+    return this.model.makePrimary(user.id);
   },
 
   @action

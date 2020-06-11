@@ -30,7 +30,7 @@
       <table class="group-members">
         <thead>
           {{table-header-toggle order=order asc=asc field="username_lower" labelKey="username"}}
-          <th class="group-owner">{{i18n "groups.members.owner"}}</th>
+          <th class="group-extra"></th>
           {{table-header-toggle order=order asc=asc field="added_at" labelKey="groups.member_added"}}
           {{table-header-toggle order=order asc=asc field="last_posted_at" labelKey="last_post"}}
           {{table-header-toggle order=order asc=asc field="last_seen_at" labelKey="last_seen"}}
@@ -44,11 +44,12 @@
                 {{user-info user=m skipName=skipName}}
               </td>
 
-              <td class="group-owner">
+              <td class="group-extra">
                 {{#if m.owner}}
-                  <strong class="group-owner-label">
-                    {{d-icon "shield-alt"}}
-                  </strong>
+                  {{d-icon "shield-alt"}} {{i18n "groups.members.owner"}}<br>
+                {{/if}}
+                {{#if m.primary}}
+                  {{i18n "groups.members.primary"}}
                 {{/if}}
               </td>
               <td>
@@ -65,6 +66,7 @@
                 {{#if canManageGroup}}
                   {{group-member-dropdown
                     member=m
+                    model=model
                     onChange=(action "actOnGroup" m)
                   }}
                 {{/if}}

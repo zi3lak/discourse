@@ -9,6 +9,7 @@ import RestModel from "discourse/models/rest";
 import Topic from "discourse/models/topic";
 import User from "discourse/models/user";
 import { Promise } from "rsvp";
+import I18n from "I18n";
 
 const Group = RestModel.extend({
   user_count: 0,
@@ -56,6 +57,7 @@ const Group = RestModel.extend({
       members.pushObjects(
         result.members.map(member => {
           member.owner = ownerIds.has(member.id);
+          member.primary = member.primary_group_name === this.name;
           return User.create(member);
         })
       );
@@ -141,6 +143,27 @@ const Group = RestModel.extend({
 
   _filterMembers(response) {
     return this.findMembers({ filter: response.usernames.join(",") });
+  },
+
+  makePrimary(userId) {
+    this.savePrimary(userId, this.id);
+  },
+
+  removePrimary(userId) {
+    this.savePrimary(userId);
+  },
+
+  savePrimary(userId, groupId) {
+    const path = `/admin/users/${userId}/primary_group`;
+
+    return ajax(path, {
+      type: "PUT",
+      data: {
+        primary_group_id: groupId
+      }
+    })
+      .then(() => this.findMembers({}, true))
+      .catch(() => bootbox.alert(I18n.t("generic_error")));
   },
 
   @discourseComputed("display_name", "name")

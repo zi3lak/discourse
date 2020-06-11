@@ -4,6 +4,7 @@ module SvgSprite
   SVG_ICONS ||= Set.new([
     "adjust",
     "address-book",
+    "address-card",
     "ambulance",
     "anchor",
     "angle-double-down",
