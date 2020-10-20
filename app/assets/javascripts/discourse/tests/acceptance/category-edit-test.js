@@ -1,14 +1,16 @@
 import { visit } from "@ember/test-helpers";
-import { test } from "qunit";
+import { module, test } from "qunit";
 import selectKit from "discourse/tests/helpers/select-kit-helper";
 import DiscourseURL from "discourse/lib/url";
-import { acceptance } from "discourse/tests/helpers/qunit-helpers";
+import { setupDiscourse } from "discourse/tests/helpers/qunit-helpers";
 
-acceptance("Category Edit", function (needs) {
-  needs.user();
-  needs.settings({ email_in: true });
+module("Acceptance | Category Edit", function (hooks) {
+  setupDiscourse(hooks, {
+    loggedIn: true,
+    settingChanges: { email_in: true },
+  });
 
-  test("Can open the category modal", async (assert) => {
+  test("Can open the category modal", async function (assert) {
     await visit("/c/bug");
 
     await click(".edit-category");
@@ -18,7 +20,7 @@ acceptance("Category Edit", function (needs) {
     assert.ok(!visible(".d-modal"), "it closes the modal");
   });
 
-  test("Editing the category", async (assert) => {
+  test("Editing the category", async function (assert) {
     await visit("/c/bug");
 
     await click(".edit-category");
@@ -47,7 +49,7 @@ acceptance("Category Edit", function (needs) {
     );
   });
 
-  test("Error Saving", async (assert) => {
+  test("Error Saving", async function (assert) {
     await visit("/c/bug");
 
     await click(".edit-category");
@@ -58,7 +60,7 @@ acceptance("Category Edit", function (needs) {
     assert.equal(find("#modal-alert").html(), "duplicate email");
   });
 
-  test("Subcategory list settings", async (assert) => {
+  test("Subcategory list settings", async function (assert) {
     const categoryChooser = selectKit(
       ".edit-category-tab-general .category-chooser"
     );

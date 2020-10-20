@@ -40,6 +40,7 @@ import Site from "discourse/models/site";
 import createStore from "discourse/tests/helpers/create-store";
 import { getApplication } from "@ember/test-helpers";
 import deprecated from "discourse-common/lib/deprecated";
+import createPretender from "discourse/tests/helpers/create-pretender";
 
 export function currentUser() {
   return User.create(sessionFixtures["/session/current.json"].current_user);
@@ -285,6 +286,80 @@ export function acceptance(name, optionsOrCallback) {
     // Old way
     module(name, setup);
   }
+}
+
+export function setupDiscourse(hooks, options = {}) {
+  hooks.beforeEach(function () {
+    resetMobile();
+
+    // For now don't do scrolling stuff in Test Mode
+    HeaderComponent.reopen({ examineDockHeader: function () {} });
+
+    resetExtraClasses();
+
+    if (options.mobileView) {
+      forceMobile();
+    }
+
+    if (options.loggedIn) {
+      logIn();
+    }
+
+    if (options.settingChanges) {
+      mergeSettings(options.settingChanges);
+    }
+    this.siteSettings = currentSettings();
+
+    clearOutletCache();
+    clearHTMLCache();
+    resetPluginApi();
+
+    if (options.siteChanges) {
+      resetSite(currentSettings(), options.siteChanges);
+    }
+
+    getApplication().reset();
+    this.container = getOwner(this);
+
+    this.server = createPretender;
+
+    setURLContainer(this.container);
+    setDefaultOwner(this.container);
+  });
+
+  hooks.afterEach(function () {
+    let app = getApplication();
+    flushMap();
+    localStorage.clear();
+    User.resetCurrent();
+    resetSite(currentSettings());
+    resetExtraClasses();
+    clearOutletCache();
+    clearHTMLCache();
+    resetPluginApi();
+    clearRewrites();
+    initSearchData();
+    resetDecorators();
+    resetPostCookedDecorators();
+    resetPluginOutletDecorators();
+    resetTopicTitleDecorators();
+    resetUsernameDecorators();
+    resetOneboxCache();
+    resetCustomPostMessageCallbacks();
+    setTopicList(null);
+    _clearSnapshots();
+    setURLContainer(null);
+    setDefaultOwner(null);
+    app._runInitializer("instanceInitializers", (initName, initializer) => {
+      if (initializer && initializer.teardown) {
+        initializer.teardown(this.container);
+      }
+    });
+    app.reset();
+
+    // We do this after reset so that the willClearRender will have already fired
+    resetWidgetCleanCallbacks();
+  });
 }
 
 export function controllerFor(controller, model) {
