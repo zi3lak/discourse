@@ -7,13 +7,10 @@ import createPretender, {
   applyDefaultHandlers,
   pretenderHelpers,
 } from "discourse/tests/helpers/create-pretender";
-import {
-  currentSettings,
-  resetSettings,
-} from "discourse/tests/helpers/site-settings";
 import { getOwner, setDefaultOwner } from "discourse-common/lib/get-owner";
 import { setApplication, setResolver } from "@ember/test-helpers";
 import { setupS3CDN, setupURL } from "discourse-common/lib/get-url";
+import Application from "../app";
 import MessageBus from "message-bus-client";
 import PreloadStore from "discourse/lib/preload-store";
 import QUnit from "qunit";
@@ -26,6 +23,8 @@ import { clearAppEventsCache } from "discourse/services/app-events";
 import { createHelperContext } from "discourse-common/lib/helpers";
 import deprecated from "discourse-common/lib/deprecated";
 import { flushMap } from "discourse/models/store";
+import { registerObjects } from "discourse/pre-initializers/inject-discourse-objects";
+import { resetSettings } from "discourse/tests/helpers/site-settings";
 import sinon from "sinon";
 
 const Plugin = $.fn.modal;
@@ -55,9 +54,31 @@ function AcceptanceModal(option, _relatedTarget) {
   });
 }
 
-export default function setupTests(app, container) {
+let app;
+let started = false;
+
+function createApplication(config, settings) {
+  app = Application.create(config);
+  setApplication(app);
   setResolver(buildResolver("discourse").create({ namespace: app }));
 
+  let container = app.__registry__.container();
+  app.__container__ = container;
+  setDefaultOwner(container);
+  app.rootElement = "#ember-testing";
+  app.setupForTesting();
+  app.testing = false;
+  if (!started) {
+    app.start();
+    started = true;
+  }
+
+  app.SiteSettings = settings;
+  registerObjects(container, app);
+  return app;
+}
+
+export default function setupTests(config) {
   sinon.config = {
     injectIntoThis: false,
     injectInto: null,
@@ -69,11 +90,6 @@ export default function setupTests(app, container) {
   // Stop the message bus so we don't get ajax calls
   MessageBus.stop();
 
-  app.rootElement = "#ember-testing";
-  app.setupForTesting();
-  app.SiteSettings = currentSettings();
-  app.start();
-  bootbox.$body = $("#ember-testing");
   $.fn.modal = AcceptanceModal;
 
   // disable logster error reporting
@@ -123,7 +139,10 @@ export default function setupTests(app, container) {
   });
 
   QUnit.testStart(function (ctx) {
+    bootbox.$body = $("#ember-testing");
     let settings = resetSettings();
+    app = createApplication(config, settings);
+
     server = createPretender;
     server.handlers = [];
     applyDefaultHandlers(server);
@@ -226,7 +245,4 @@ export default function setupTests(app, container) {
 
   // forces 0 as duration for all jquery animations
   jQuery.fx.off = true;
-  setApplication(app);
-  setDefaultOwner(container);
-  resetSite();
 }
