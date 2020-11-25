@@ -48,10 +48,16 @@ export default Controller.extend({
   },
 
   @observes("filter")
-  filterContent: discourseDebounce(function () {
-    this.filterContentNow();
-    this.set("filtered", !isEmpty(this.filter));
-  }, INPUT_DELAY),
+  filterContent() {
+    discourseDebounce(
+      this,
+      function () {
+        this.filterContentNow();
+        this.set("filtered", !isEmpty(this.filter));
+      },
+      INPUT_DELAY
+    );
+  },
 
   actions: {
     clearFilter() {
