@@ -9,23 +9,21 @@ import User from "discourse/models/user";
 import sinon from "sinon";
 import { test } from "qunit";
 
-let BookmarkController;
-
-function mockMomentTz(dateString) {
-  fakeTime(dateString, BookmarkController.userTimezone);
-}
-
 discourseModule("Unit | Controller | bookmark", function (hooks) {
+  let controller;
+  function mockMomentTz(dateString) {
+    fakeTime(dateString, controller.userTimezone);
+  }
+
   hooks.beforeEach(function () {
     logIn();
     KeyboardShortcutInitializer.initialize(this.container);
 
-    BookmarkController = this.owner.lookup("controller:bookmark");
-    BookmarkController.setProperties({
+    controller = this.getController("bookmark", {
       currentUser: User.current(),
       site: { isMobileDevice: false },
     });
-    BookmarkController.onShow();
+    controller.onShow();
   });
 
   hooks.afterEach(function () {
@@ -35,88 +33,74 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
   test("showLaterToday when later today is tomorrow do not show", function (assert) {
     mockMomentTz("2019-12-11T22:00:00");
 
-    assert.equal(BookmarkController.get("showLaterToday"), false);
+    assert.equal(controller.get("showLaterToday"), false);
   });
 
   test("showLaterToday when later today is after 5pm but before 6pm", function (assert) {
     mockMomentTz("2019-12-11T15:00:00");
-    assert.equal(BookmarkController.get("showLaterToday"), true);
+    assert.equal(controller.get("showLaterToday"), true);
   });
 
   test("showLaterToday when now is after the cutoff time (5pm)", function (assert) {
     mockMomentTz("2019-12-11T17:00:00");
-    assert.equal(BookmarkController.get("showLaterToday"), false);
+    assert.equal(controller.get("showLaterToday"), false);
   });
 
   test("showLaterToday when later today is before the end of the day, show", function (assert) {
     mockMomentTz("2019-12-11T10:00:00");
 
-    assert.equal(BookmarkController.get("showLaterToday"), true);
+    assert.equal(controller.get("showLaterToday"), true);
   });
 
   test("nextWeek gets next week correctly", function (assert) {
     mockMomentTz("2019-12-11T08:00:00");
 
-    assert.equal(
-      BookmarkController.nextWeek().format("YYYY-MM-DD"),
-      "2019-12-18"
-    );
+    assert.equal(controller.nextWeek().format("YYYY-MM-DD"), "2019-12-18");
   });
 
   test("nextMonth gets next month correctly", function (assert) {
     mockMomentTz("2019-12-11T08:00:00");
 
-    assert.equal(
-      BookmarkController.nextMonth().format("YYYY-MM-DD"),
-      "2020-01-11"
-    );
+    assert.equal(controller.nextMonth().format("YYYY-MM-DD"), "2020-01-11");
   });
 
   test("laterThisWeek gets 2 days from now", function (assert) {
     mockMomentTz("2019-12-10T08:00:00");
 
-    assert.equal(
-      BookmarkController.laterThisWeek().format("YYYY-MM-DD"),
-      "2019-12-12"
-    );
+    assert.equal(controller.laterThisWeek().format("YYYY-MM-DD"), "2019-12-12");
   });
 
   test("laterThisWeek returns null if we are at Thursday already", function (assert) {
     mockMomentTz("2019-12-12T08:00:00");
 
-    assert.equal(BookmarkController.laterThisWeek(), null);
+    assert.equal(controller.laterThisWeek(), null);
   });
 
   test("showLaterThisWeek returns true if < Thursday", function (assert) {
     mockMomentTz("2019-12-10T08:00:00");
 
-    assert.equal(BookmarkController.showLaterThisWeek, true);
+    assert.equal(controller.showLaterThisWeek, true);
   });
 
   test("showLaterThisWeek returns false if > Thursday", function (assert) {
     mockMomentTz("2019-12-12T08:00:00");
 
-    assert.equal(BookmarkController.showLaterThisWeek, false);
+    assert.equal(controller.showLaterThisWeek, false);
   });
   test("tomorrow gets tomorrow correctly", function (assert) {
     mockMomentTz("2019-12-11T08:00:00");
 
-    assert.equal(
-      BookmarkController.tomorrow().format("YYYY-MM-DD"),
-      "2019-12-12"
-    );
+    assert.equal(controller.tomorrow().format("YYYY-MM-DD"), "2019-12-12");
   });
 
   test("startOfDay changes the time of the provided date to 8:00am correctly", function (assert) {
     let dt = moment.tz(
       "2019-12-11T11:37:16",
-      BookmarkController.currentUser.resolvedTimezone(
-        BookmarkController.currentUser
-      )
+      controller.currentUser.resolvedTimezone(controller.currentUser)
     );
 
     assert.equal(
-      BookmarkController.startOfDay(dt).format("YYYY-MM-DD HH:mm:ss"),
+      controller.startOfDay(dt).format("YYYY-MM-DD HH:mm:ss"),
       "2019-12-11 08:00:00"
     );
   });
@@ -125,7 +109,7 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     mockMomentTz("2019-12-11T08:13:00");
 
     assert.equal(
-      BookmarkController.laterToday().format("YYYY-MM-DD HH:mm:ss"),
+      controller.laterToday().format("YYYY-MM-DD HH:mm:ss"),
       "2019-12-11 11:00:00"
     );
   });
@@ -134,7 +118,7 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     mockMomentTz("2019-12-11T08:43:00");
 
     assert.equal(
-      BookmarkController.laterToday().format("YYYY-MM-DD HH:mm:ss"),
+      controller.laterToday().format("YYYY-MM-DD HH:mm:ss"),
       "2019-12-11 12:00:00"
     );
   });
@@ -143,7 +127,7 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     mockMomentTz("2019-12-11T15:00:00");
 
     assert.equal(
-      BookmarkController.laterToday().format("YYYY-MM-DD HH:mm:ss"),
+      controller.laterToday().format("YYYY-MM-DD HH:mm:ss"),
       "2019-12-11 18:00:00",
       "3pm should max to 6pm"
     );
@@ -151,7 +135,7 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     mockMomentTz("2019-12-11T15:31:00");
 
     assert.equal(
-      BookmarkController.laterToday().format("YYYY-MM-DD HH:mm:ss"),
+      controller.laterToday().format("YYYY-MM-DD HH:mm:ss"),
       "2019-12-11 18:00:00",
       "3:30pm should max to 6pm"
     );
@@ -159,7 +143,7 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     mockMomentTz("2019-12-11T16:00:00");
 
     assert.equal(
-      BookmarkController.laterToday().format("YYYY-MM-DD HH:mm:ss"),
+      controller.laterToday().format("YYYY-MM-DD HH:mm:ss"),
       "2019-12-11 18:00:00",
       "4pm should max to 6pm"
     );
@@ -167,7 +151,7 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     mockMomentTz("2019-12-11T16:59:00");
 
     assert.equal(
-      BookmarkController.laterToday().format("YYYY-MM-DD HH:mm:ss"),
+      controller.laterToday().format("YYYY-MM-DD HH:mm:ss"),
       "2019-12-11 18:00:00",
       "4:59pm should max to 6pm"
     );
@@ -175,28 +159,25 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
 
   test("showLaterToday returns false if >= 5PM", function (assert) {
     mockMomentTz("2019-12-11T17:00:01");
-    assert.equal(BookmarkController.showLaterToday, false);
+    assert.equal(controller.showLaterToday, false);
   });
 
   test("showLaterToday returns false if >= 5PM", function (assert) {
     mockMomentTz("2019-12-11T17:00:01");
-    assert.equal(BookmarkController.showLaterToday, false);
+    assert.equal(controller.showLaterToday, false);
   });
 
   test("reminderAt - custom - defaults to 8:00am if the time is not selected", function (assert) {
-    BookmarkController.customReminderDate = "2028-12-12";
-    BookmarkController.selectedReminderType =
-      BookmarkController.reminderTypes.CUSTOM;
-    const reminderAt = BookmarkController._reminderAt();
-    assert.equal(BookmarkController.customReminderTime, "08:00");
+    controller.customReminderDate = "2028-12-12";
+    controller.selectedReminderType = controller.reminderTypes.CUSTOM;
+    const reminderAt = controller._reminderAt();
+    assert.equal(controller.customReminderTime, "08:00");
     assert.equal(
       reminderAt.toString(),
       moment
         .tz(
           "2028-12-12 08:00",
-          BookmarkController.currentUser.resolvedTimezone(
-            BookmarkController.currentUser
-          )
+          controller.currentUser.resolvedTimezone(controller.currentUser)
         )
         .toString(),
       "the custom date and time are parsed correctly with default time"
@@ -208,10 +189,10 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     localStorage.lastCustomBookmarkReminderDate = "2019-12-12";
     localStorage.lastCustomBookmarkReminderTime = "08:00";
 
-    BookmarkController._loadLastUsedCustomReminderDatetime();
+    controller._loadLastUsedCustomReminderDatetime();
 
-    assert.equal(BookmarkController.lastCustomReminderDate, "2019-12-12");
-    assert.equal(BookmarkController.lastCustomReminderTime, "08:00");
+    assert.equal(controller.lastCustomReminderDate, "2019-12-12");
+    assert.equal(controller.lastCustomReminderTime, "08:00");
   });
 
   test("loadLastUsedCustomReminderDatetime does not fills the custom reminder date + time if the datetime in localStorage is < now", function (assert) {
@@ -219,27 +200,27 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
     localStorage.lastCustomBookmarkReminderDate = "2019-12-11";
     localStorage.lastCustomBookmarkReminderTime = "07:00";
 
-    BookmarkController._loadLastUsedCustomReminderDatetime();
+    controller._loadLastUsedCustomReminderDatetime();
 
-    assert.equal(BookmarkController.lastCustomReminderDate, null);
-    assert.equal(BookmarkController.lastCustomReminderTime, null);
+    assert.equal(controller.lastCustomReminderDate, null);
+    assert.equal(controller.lastCustomReminderTime, null);
   });
 
   test("user timezone updates when the modal is shown", function (assert) {
     User.current().changeTimezone(null);
     let stub = sinon.stub(moment.tz, "guess").returns("Europe/Moscow");
-    BookmarkController.onShow();
-    assert.equal(BookmarkController.userHasTimezoneSet, true);
+    controller.onShow();
+    assert.equal(controller.userHasTimezoneSet, true);
     assert.equal(
-      BookmarkController.userTimezone,
+      controller.userTimezone,
       "Europe/Moscow",
       "the user does not have their timezone set and a timezone is guessed"
     );
     User.current().changeTimezone("Australia/Brisbane");
-    BookmarkController.onShow();
-    assert.equal(BookmarkController.userHasTimezoneSet, true);
+    controller.onShow();
+    assert.equal(controller.userHasTimezoneSet, true);
     assert.equal(
-      BookmarkController.userTimezone,
+      controller.userTimezone,
       "Australia/Brisbane",
       "the user does their timezone set"
     );
@@ -249,14 +230,11 @@ discourseModule("Unit | Controller | bookmark", function (hooks) {
   test("opening the modal with an existing bookmark with reminder at prefills the custom reminder type", function (assert) {
     let name = "test";
     let reminderAt = "2020-05-15T09:45:00";
-    BookmarkController.model = { id: 1, name: name, reminderAt: reminderAt };
-    BookmarkController.onShow();
-    assert.equal(
-      BookmarkController.selectedReminderType,
-      REMINDER_TYPES.CUSTOM
-    );
-    assert.equal(BookmarkController.customReminderDate, "2020-05-15");
-    assert.equal(BookmarkController.customReminderTime, "09:45");
-    assert.equal(BookmarkController.model.name, name);
+    controller.model = { id: 1, name: name, reminderAt: reminderAt };
+    controller.onShow();
+    assert.equal(controller.selectedReminderType, REMINDER_TYPES.CUSTOM);
+    assert.equal(controller.customReminderDate, "2020-05-15");
+    assert.equal(controller.customReminderTime, "09:45");
+    assert.equal(controller.model.name, name);
   });
 });
