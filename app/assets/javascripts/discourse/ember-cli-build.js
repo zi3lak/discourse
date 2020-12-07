@@ -36,6 +36,7 @@ module.exports = function (defaults) {
   app.import(vendorJs + "bootstrap-modal.js");
   app.import(vendorJs + "jquery.ui.widget.js");
   app.import(vendorJs + "jquery.fileupload.js");
+  app.import(vendorJs + "jquery.autoellipsis-1.0.10.js");
 
   return mergeTrees([
     app.toTree(),
