@@ -70,9 +70,9 @@ begin
   require 'facter'
   raise LoadError if Gem::Version.new(Facter.version) < Gem::Version.new("4.0")
 rescue LoadError
-  run "gem install facter"
-  puts "please rerun script"
-  exit
+  #run "gem install facter"
+  #puts "please rerun script"
+#  exit
 end
 
 @timings = {}
@@ -285,8 +285,9 @@ begin
 
   # Prevent using external facts because it breaks when running in the
   # discourse/discourse_bench docker container.
-  Facter.reset
-  facts = Facter.to_hash
+  #Facter.reset
+  #facts = Facter.to_hash
+  facts = {}
 
   facts.delete_if { |k, v|
     !["operatingsystem", "architecture", "kernelversion",

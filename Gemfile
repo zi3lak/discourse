@@ -52,7 +52,7 @@ gem 'redis'
 # redis namespace support is optional
 # We already namespace stuff in DiscourseRedis, so we should consider
 # just using a single implementation in core vs having 2 namespace implementations
-gem 'redis-namespace'
+gem 'redis-namespace', github: 'resque/redis-namespace'
 
 # NOTE: AM serializer gets a lot slower with recent updates
 # we used an old branch which is the fastest one out there
@@ -173,7 +173,7 @@ group :development do
   gem 'ruby-prof', require: false, platform: :mri
   gem 'bullet', require: !!ENV['BULLET']
   gem 'better_errors', platform: :mri, require: !!ENV['BETTER_ERRORS']
-  gem 'binding_of_caller'
+  #gem 'binding_of_caller'
   gem 'yaml-lint'
   gem 'annotate'
 end
@@ -220,7 +220,10 @@ gem "sassc-rails"
 
 gem 'rotp', require: false
 
-gem 'rqrcode'
+# temporary removal cause it is explicitly broken on Ruby 3.0
+# https://github.com/whomwah/rqrcode_core/pull/11
+#gem 'rqrcode_core', path: "../rqrcode_core"
+#gem 'rqrcode', path: "../rqrcode"
 
 gem 'rubyzip', require: false
 
