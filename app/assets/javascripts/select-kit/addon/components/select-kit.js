@@ -1,7 +1,12 @@
 import EmberObject, { computed, get } from "@ember/object";
+import PluginApiMixin, {
+  applyContentPluginApiCallbacks,
+  applyOnChangePluginApiCallbacks,
+} from "select-kit/mixins/plugin-api";
 import { bind, cancel, next, schedule, throttle } from "@ember/runloop";
 import { isEmpty, isNone, isPresent } from "@ember/utils";
 import Component from "@ember/component";
+import I18n from "I18n";
 import Mixin from "@ember/object/mixin";
 import { Promise } from "rsvp";
 import UtilsMixin from "select-kit/mixins/utils";
