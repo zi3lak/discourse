@@ -382,8 +382,9 @@ export async function selectDate(selector, date) {
   });
 }
 
-export function queryAll() {
-  return window.find(...arguments);
+export function queryAll(selector, context) {
+  context = context || "#ember-testing";
+  return $(selector, context);
 }
 
 export function invisible(selector) {
