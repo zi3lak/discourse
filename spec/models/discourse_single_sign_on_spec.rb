@@ -181,6 +181,18 @@ describe DiscourseSingleSignOn do
     expect(admin_group.users.where('users.id = ?', user.id).exists?).to eq(true)
   end
 
+  it "can set ip_address and registration_ip_address" do
+    sso = DiscourseSingleSignOn.new
+    sso.username = "bobby"
+    sso.name = "Bob O'Bob"
+    sso.email = "test@example.com"
+    sso.external_id = "B"
+    user = sso.lookup_or_create_user(ip_address)
+
+    expect(user.ip_address).to eq(ip_address)
+    expect(user.registration_ip_address).to eq(ip_address)
+  end
+
   it "can force a list of groups with the groups attribute" do
     user = Fabricate(:user)
     group1 = Fabricate(:group, name: 'group1')

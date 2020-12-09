@@ -210,7 +210,8 @@ class DiscourseSingleSignOn < SingleSignOn
           primary_email: UserEmail.new(email: email, primary: true),
           name: try_name || User.suggest_name(try_username || email),
           username: UserNameSuggester.suggest(try_username || try_name || email),
-          ip_address: ip_address
+          ip_address: ip_address,
+          registration_ip_address: ip_address
         }
 
         if SiteSetting.allow_user_locale && locale && LocaleSiteSetting.valid_value?(locale)
