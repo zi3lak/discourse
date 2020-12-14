@@ -1,8 +1,8 @@
-import { module, test } from "qunit";
-/* global BreakString:true */
+import { module, skip } from "qunit";
 
 module("Unit | Utility | breakString", function () {
-  test("breakString", function (assert) {
+  // TODO: BreakString is exposed only to Rails, can't test it in Ember-land
+  skip("breakString", function (assert) {
     const b = (s, hint) => new BreakString(s).break(hint);
 
     assert.equal(b("hello"), "hello");
