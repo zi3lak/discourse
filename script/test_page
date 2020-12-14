@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+ENV['RAILS_ENV'] = 'profile'
+
+require File.expand_path("../../config/environment", __FILE__)
+
+def make_request
+  req = {
+    "REQUEST_METHOD" => "GET",
+    "SCRIPT_NAME" => "",
+    "PATH_INFO" => "/",
+    "QUERY_STRING" => "",
+    "SERVER_NAME" => "127.0.0.1",
+    "SERVER_PORT" => "80",
+    "REQUEST_PATH" => "/",
+    "REMOTE_ADDR" => "127.0.0.1",
+    "HTTP_VERSION" => "HTTP/1.0",
+    "rack.input" => StringIO.new(""),
+    "rack.version" => [1, 2],
+    "rack.url_scheme" => "http"
+  }
+
+  Rails.application.call(req)
+end
+
+10.times do
+  make_request
+end
+
+3.times do
+  GC.start(full_mark: true, immediate_sweep: true)
+end
+
+start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+RubyVM.reset_debug_counters
+make_request
+RubyVM.show_debug_counters
+elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start
+
+puts "Duration was #{elapsed}"
+gets
