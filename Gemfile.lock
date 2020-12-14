@@ -422,6 +422,7 @@ GEM
     webpush (1.1.0)
       hkdf (~> 0.2)
       jwt (~> 2.0)
+    webrick (1.7.0)
     xorcist (1.1.2)
     yaml-lint (0.0.10)
     zeitwerk (2.4.1)
@@ -549,6 +550,7 @@ DEPENDENCIES
   unicorn
   webmock
   webpush
+  webrick
   xorcist
   yaml-lint
 
