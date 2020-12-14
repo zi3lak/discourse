@@ -1,3 +1,4 @@
+import Composer, { SAVE_ICONS, SAVE_LABELS } from "discourse/models/composer";
 import Controller, { inject } from "@ember/controller";
 import EmberObject, { action, computed } from "@ember/object";
 import { alias, and, or, reads } from "@ember/object/computed";
