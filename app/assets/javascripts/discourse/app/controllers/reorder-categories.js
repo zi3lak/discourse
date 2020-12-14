@@ -1,4 +1,5 @@
 import discourseComputed, { on } from "discourse-common/utils/decorators";
+import BufferedMixin from "ember-buffered-proxy/mixin";
 import BufferedProxy from "ember-buffered-proxy/proxy";
 import Controller from "@ember/controller";
 import EmberObjectProxy from "@ember/object/proxy";
@@ -16,7 +17,7 @@ export default Controller.extend(ModalFunctionality, Evented, {
 
   @discourseComputed("site.categories")
   categoriesBuffered(categories) {
-    const bufProxy = EmberObjectProxy.extend(BufferedProxy);
+    const bufProxy = EmberObjectProxy.extend(BufferedMixin || BufferedProxy);
     return (categories || []).map((c) => bufProxy.create({ content: c }));
   },
 
