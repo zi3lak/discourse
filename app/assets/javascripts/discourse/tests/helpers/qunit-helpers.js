@@ -213,8 +213,12 @@ export function acceptance(name, optionsOrCallback) {
         resetSite(currentSettings(), siteChanges);
       }
 
-      getApplication().reset();
+      if (!setupApplicationTest) {
+        // Legacy testing environment
+        getApplication().reset();
+      }
       this.container = getOwner(this);
+
       setURLContainer(this.container);
       setDefaultOwner(this.container);
 
@@ -254,7 +258,11 @@ export function acceptance(name, optionsOrCallback) {
           initializer.teardown(this.container);
         }
       });
-      app.reset();
+
+      if (!setupApplicationTest) {
+        // Legacy testing environment
+        app.reset();
+      }
 
       // We do this after reset so that the willClearRender will have already fired
       resetWidgetCleanCallbacks();
@@ -296,17 +304,15 @@ export function acceptance(name, optionsOrCallback) {
   if (callback) {
     // New, preferred way
     module(name, function (hooks) {
+      needs.hooks = hooks;
       hooks.beforeEach(setup.beforeEach);
       hooks.afterEach(setup.afterEach);
-      needs.hooks = hooks;
       callback(needs);
 
-      if (setupApplicationTest) {
+      if (setupApplicationTest && getContext) {
         setupApplicationTest(hooks);
-      }
 
-      if (getContext) {
-        needs.hooks.beforeEach(function () {
+        hooks.beforeEach(function () {
           // This hack seems necessary to allow `DiscourseURL` to use the testing router
           let ctx = getContext();
           this.container.registry.unregister("router:main");

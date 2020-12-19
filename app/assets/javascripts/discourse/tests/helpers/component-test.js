@@ -1,7 +1,8 @@
+import { TestModuleForComponent, render } from "@ember/test-helpers";
 import EmberObject from "@ember/object";
+import { setupRenderingTest as EmberSetupRenderingTest } from "ember-qunit";
 import Session from "discourse/models/session";
 import Site from "discourse/models/site";
-import { TestModuleForComponent } from "@ember/test-helpers";
 import TopicTrackingState from "discourse/models/topic-tracking-state";
 import User from "discourse/models/user";
 import { autoLoadModules } from "discourse/initializers/auto-load-modules";
@@ -10,6 +11,10 @@ import { currentSettings } from "discourse/tests/helpers/site-settings";
 import { test } from "qunit";
 
 export function setupRenderingTest(hooks) {
+  if (EmberSetupRenderingTest) {
+    return EmberSetupRenderingTest.apply(this, arguments);
+  }
+
   let testModule;
 
   hooks.before(function () {
@@ -34,8 +39,8 @@ export function setupRenderingTest(hooks) {
 }
 
 if (typeof andThen === "undefined") {
-  window.andThen = function (callback) {
-    return callback.call(this);
+  window.andThen = async function (callback) {
+    return await callback.call(this);
   };
 }
 
@@ -50,24 +55,34 @@ export default function (name, opts) {
     this.site = Site.current();
     this.session = Session.current();
 
-    this.registry.register("site-settings:main", currentSettings(), {
-      instantiate: false,
-    });
-    this.registry.register("capabilities:main", EmberObject);
-    this.registry.register("site:main", this.site, { instantiate: false });
-    this.registry.register("session:main", this.session, {
-      instantiate: false,
-    });
-    this.registry.injection("component", "siteSettings", "site-settings:main");
-    this.registry.injection("component", "appEvents", "service:app-events");
-    this.registry.injection("component", "capabilities", "capabilities:main");
-    this.registry.injection("component", "site", "site:main");
-    this.registry.injection("component", "session", "session:main");
+    if (!EmberSetupRenderingTest) {
+      // Legacy test environment
+      this.registry.register("site-settings:main", currentSettings(), {
+        instantiate: false,
+      });
+      this.registry.register("capabilities:main", EmberObject);
+      this.registry.register("site:main", this.site, { instantiate: false });
+      this.registry.register("session:main", this.session, {
+        instantiate: false,
+      });
+      this.registry.injection(
+        "component",
+        "siteSettings",
+        "site-settings:main"
+      );
+      this.registry.injection("component", "appEvents", "service:app-events");
+      this.registry.injection("component", "capabilities", "capabilities:main");
+      this.registry.injection("component", "site", "site:main");
+      this.registry.injection("component", "session", "session:main");
 
-    this.siteSettings = currentSettings();
+      this.siteSettings = currentSettings();
+
+      const store = createStore();
+      this.registry.register("service:store", store, { instantiate: false });
+    }
+
     autoLoadModules(this.container, this.registry);
 
-    const store = createStore();
     if (!opts.anonymous) {
       const currentUser = User.create({ username: "eviltrout" });
       this.currentUser = currentUser;
@@ -75,6 +90,7 @@ export default function (name, opts) {
         instantiate: false,
       });
       this.registry.injection("component", "currentUser", "current-user:main");
+      this.registry.unregister("topic-tracking-state:main");
       this.registry.register(
         "topic-tracking-state:main",
         TopicTrackingState.create({ currentUser }),
@@ -82,14 +98,13 @@ export default function (name, opts) {
       );
     }
 
-    this.registry.register("service:store", store, { instantiate: false });
-
     if (opts.beforeEach) {
+      const store = this.container.lookup("service:store");
       opts.beforeEach.call(this, store);
     }
 
     await andThen(() => {
-      return this.render(opts.template);
+      return (render || this.render)(opts.template);
     });
 
     await andThen(() => {
