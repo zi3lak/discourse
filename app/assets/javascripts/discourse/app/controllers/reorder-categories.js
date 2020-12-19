@@ -11,14 +11,13 @@ import { sort } from "@ember/object/computed";
 export default Controller.extend(ModalFunctionality, Evented, {
   init() {
     this._super(...arguments);
-
     this.categoriesSorting = ["position"];
   },
 
   @discourseComputed("site.categories")
   categoriesBuffered(categories) {
     const bufProxy = EmberObjectProxy.extend(BufferedProxy);
-    return categories.map((c) => bufProxy.create({ content: c }));
+    return (categories || []).map((c) => bufProxy.create({ content: c }));
   },
 
   categoriesOrdered: sort("categoriesBuffered", "categoriesSorting"),

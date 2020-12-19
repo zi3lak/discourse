@@ -5,7 +5,7 @@ import { test } from "qunit";
 discourseModule("Unit | Controller | create-account", function () {
   test("basicUsernameValidation", async function (assert) {
     const testInvalidUsername = async (username, expectedReason) => {
-      const controller = await this.owner.lookup("controller:create-account");
+      const controller = this.getController("create-account");
       controller.set("accountUsername", username);
 
       let validation = controller.basicUsernameValidation(username);
@@ -41,7 +41,7 @@ discourseModule("Unit | Controller | create-account", function () {
   });
 
   test("passwordValidation", async function (assert) {
-    const controller = await this.owner.lookup("controller:create-account");
+    const controller = this.getController("create-account");
 
     controller.set("authProvider", "");
     controller.set("accountEmail", "pork@chops.com");

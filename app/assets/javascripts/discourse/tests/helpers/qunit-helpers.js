@@ -113,6 +113,16 @@ export function discourseModule(name, options) {
         this.siteSettings = currentSettings();
       });
 
+      this.getController = function (controllerName, properties) {
+        let controller = this.container.lookup(`controller:${controllerName}`);
+        controller.application = {};
+        controller.siteSettings = this.siteSettings;
+        if (properties) {
+          controller.setProperties(properties);
+        }
+        return controller;
+      };
+
       this.moduleName = name;
 
       options.call(this, hooks);
