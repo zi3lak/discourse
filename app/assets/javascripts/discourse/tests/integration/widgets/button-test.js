@@ -5,12 +5,13 @@ import {
   discourseModule,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
+import hbs from "htmlbars-inline-precompile";
 
 discourseModule("Integration | Component | Widget | button", function (hooks) {
   setupRenderingTest(hooks);
 
   componentTest("icon only button", {
-    template: '{{mount-widget widget="button" args=args}}',
+    template: hbs`{{mount-widget widget="button" args=args}}`,
 
     beforeEach() {
       this.set("args", { icon: "far-smile" });
@@ -29,7 +30,7 @@ discourseModule("Integration | Component | Widget | button", function (hooks) {
   });
 
   componentTest("icon and text button", {
-    template: '{{mount-widget widget="button" args=args}}',
+    template: hbs`{{mount-widget widget="button" args=args}}`,
 
     beforeEach() {
       this.set("args", { icon: "plus", label: "topic.create" });
@@ -52,7 +53,7 @@ discourseModule("Integration | Component | Widget | button", function (hooks) {
   });
 
   componentTest("text only button", {
-    template: '{{mount-widget widget="button" args=args}}',
+    template: hbs`{{mount-widget widget="button" args=args}}`,
 
     beforeEach() {
       this.set("args", { label: "topic.create" });

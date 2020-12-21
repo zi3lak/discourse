@@ -5,6 +5,7 @@ import {
   discourseModule,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
+import hbs from "htmlbars-inline-precompile";
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 discourseModule("Integration | Component | Widget | post-menu", function (
@@ -13,7 +14,7 @@ discourseModule("Integration | Component | Widget | post-menu", function (
   setupRenderingTest(hooks);
 
   componentTest("add extra button", {
-    template: '{{mount-widget widget="post-menu" args=args}}',
+    template: hbs`{{mount-widget widget="post-menu" args=args}}`,
     beforeEach() {
       this.set("args", {});
       withPluginApi("0.8", (api) => {
@@ -37,7 +38,7 @@ discourseModule("Integration | Component | Widget | post-menu", function (
   });
 
   componentTest("remove extra button", {
-    template: '{{mount-widget widget="post-menu" args=args}}',
+    template: hbs`{{mount-widget widget="post-menu" args=args}}`,
     beforeEach() {
       this.set("args", {});
       withPluginApi("0.8", (api) => {

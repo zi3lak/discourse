@@ -8,6 +8,7 @@ import {
 import DiscourseURL from "discourse/lib/url";
 import I18n from "I18n";
 import { click } from "@ember/test-helpers";
+import hbs from "htmlbars-inline-precompile";
 import sinon from "sinon";
 
 discourseModule("Integration | Component | Widget | user-menu", function (
@@ -16,7 +17,7 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   setupRenderingTest(hooks);
 
   componentTest("basics", {
-    template: '{{mount-widget widget="user-menu"}}',
+    template: hbs`{{mount-widget widget="user-menu"}}`,
 
     test(assert) {
       assert.ok(queryAll(".user-menu").length);
@@ -29,7 +30,7 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("notifications", {
-    template: '{{mount-widget widget="user-menu"}}',
+    template: hbs`{{mount-widget widget="user-menu"}}`,
 
     async test(assert) {
       const $links = queryAll(".quick-access-panel li a");
@@ -86,7 +87,7 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("log out", {
-    template: '{{mount-widget widget="user-menu" logout=(action "logout")}}',
+    template: hbs`{{mount-widget widget="user-menu" logout=(action "logout")}}`,
 
     beforeEach() {
       this.on("logout", () => (this.loggedOut = true));
@@ -102,7 +103,7 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("private messages - disabled", {
-    template: '{{mount-widget widget="user-menu"}}',
+    template: hbs`{{mount-widget widget="user-menu"}}`,
     beforeEach() {
       this.siteSettings.enable_personal_messages = false;
     },
@@ -113,7 +114,7 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("private messages - enabled", {
-    template: '{{mount-widget widget="user-menu"}}',
+    template: hbs`{{mount-widget widget="user-menu"}}`,
     beforeEach() {
       this.siteSettings.enable_personal_messages = true;
     },
@@ -149,7 +150,7 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("bookmarks", {
-    template: '{{mount-widget widget="user-menu"}}',
+    template: hbs`{{mount-widget widget="user-menu"}}`,
 
     async test(assert) {
       await click(".user-bookmarks-link");
@@ -177,8 +178,9 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("anonymous", {
-    template:
-      '{{mount-widget widget="user-menu" toggleAnonymous=(action "toggleAnonymous")}}',
+    template: hbs`
+      {{mount-widget widget="user-menu" toggleAnonymous=(action "toggleAnonymous")}}
+    `,
 
     beforeEach() {
       this.currentUser.setProperties({ is_anonymous: false, trust_level: 3 });
@@ -198,7 +200,7 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("anonymous - disabled", {
-    template: '{{mount-widget widget="user-menu"}}',
+    template: hbs`{{mount-widget widget="user-menu"}}`,
 
     beforeEach() {
       this.siteSettings.allow_anonymous_posting = false;
@@ -211,8 +213,9 @@ discourseModule("Integration | Component | Widget | user-menu", function (
   });
 
   componentTest("anonymous - switch back", {
-    template:
-      '{{mount-widget widget="user-menu" toggleAnonymous=(action "toggleAnonymous")}}',
+    template: hbs`
+      {{mount-widget widget="user-menu" toggleAnonymous=(action "toggleAnonymous")}}
+    `,
 
     beforeEach() {
       this.currentUser.setProperties({ is_anonymous: true });

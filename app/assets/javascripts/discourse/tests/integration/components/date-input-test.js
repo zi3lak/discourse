@@ -6,6 +6,7 @@ import {
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
 import { click } from "@ember/test-helpers";
+import hbs from "htmlbars-inline-precompile";
 
 function dateInput() {
   return queryAll(".date-picker");
@@ -29,7 +30,7 @@ discourseModule("Integration | Component | date-input", function (hooks) {
   setupRenderingTest(hooks);
 
   componentTest("default", {
-    template: `{{date-input date=date}}`,
+    template: hbs`{{date-input date=date}}`,
 
     beforeEach() {
       this.setProperties({ date: DEFAULT_DATE });
@@ -41,7 +42,7 @@ discourseModule("Integration | Component | date-input", function (hooks) {
   });
 
   componentTest("prevents mutations", {
-    template: `{{date-input date=date onChange=onChange}}`,
+    template: hbs`{{date-input date=date onChange=onChange}}`,
 
     beforeEach() {
       this.setProperties({ date: DEFAULT_DATE });
@@ -57,7 +58,7 @@ discourseModule("Integration | Component | date-input", function (hooks) {
   });
 
   componentTest("allows mutations through actions", {
-    template: `{{date-input date=date onChange=onChange}}`,
+    template: hbs`{{date-input date=date onChange=onChange}}`,
 
     beforeEach() {
       this.setProperties({ date: DEFAULT_DATE });

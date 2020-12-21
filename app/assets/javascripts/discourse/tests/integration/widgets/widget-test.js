@@ -9,7 +9,7 @@ import I18n from "I18n";
 import { Promise } from "rsvp";
 import { click } from "@ember/test-helpers";
 import { createWidget } from "discourse/widgets/widget";
-import hbs from "discourse/widgets/hbs-compiler";
+import hbs from "htmlbars-inline-precompile";
 import { next } from "@ember/runloop";
 import { withPluginApi } from "discourse/lib/plugin-api";
 
@@ -17,7 +17,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   setupRenderingTest(hooks);
 
   componentTest("widget attributes are passed in via args", {
-    template: `{{mount-widget widget="hello-test" args=args}}`,
+    template: hbs`{{mount-widget widget="hello-test" args=args}}`,
 
     beforeEach() {
       createWidget("hello-test", {
@@ -34,7 +34,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("hbs template - no tagName", {
-    template: `{{mount-widget widget="hbs-test" args=args}}`,
+    template: hbs`{{mount-widget widget="hbs-test" args=args}}`,
 
     beforeEach() {
       createWidget("hbs-test", {
@@ -50,7 +50,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("hbs template - with tagName", {
-    template: `{{mount-widget widget="hbs-test" args=args}}`,
+    template: hbs`{{mount-widget widget="hbs-test" args=args}}`,
 
     beforeEach() {
       createWidget("hbs-test", {
@@ -67,7 +67,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("hbs template - with data attributes", {
-    template: `{{mount-widget widget="hbs-test" args=args}}`,
+    template: hbs`{{mount-widget widget="hbs-test" args=args}}`,
 
     beforeEach() {
       createWidget("hbs-test", {
@@ -81,7 +81,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("buildClasses", {
-    template: `{{mount-widget widget="classname-test" args=args}}`,
+    template: hbs`{{mount-widget widget="classname-test" args=args}}`,
 
     beforeEach() {
       createWidget("classname-test", {
@@ -104,7 +104,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("buildAttributes", {
-    template: `{{mount-widget widget="attributes-test" args=args}}`,
+    template: hbs`{{mount-widget widget="attributes-test" args=args}}`,
 
     beforeEach() {
       createWidget("attributes-test", {
@@ -125,7 +125,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("buildId", {
-    template: `{{mount-widget widget="id-test" args=args}}`,
+    template: hbs`{{mount-widget widget="id-test" args=args}}`,
 
     beforeEach() {
       createWidget("id-test", {
@@ -143,7 +143,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("widget state", {
-    template: `{{mount-widget widget="state-test"}}`,
+    template: hbs`{{mount-widget widget="state-test"}}`,
 
     beforeEach() {
       createWidget("state-test", {
@@ -171,7 +171,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("widget update with promise", {
-    template: `{{mount-widget widget="promise-test"}}`,
+    template: hbs`{{mount-widget widget="promise-test"}}`,
 
     beforeEach() {
       createWidget("promise-test", {
@@ -205,7 +205,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("widget attaching", {
-    template: `{{mount-widget widget="attach-test"}}`,
+    template: hbs`{{mount-widget widget="attach-test"}}`,
 
     beforeEach() {
       createWidget("test-embedded", { tagName: "div.embedded" });
@@ -223,7 +223,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("magic attaching by name", {
-    template: `{{mount-widget widget="attach-test"}}`,
+    template: hbs`{{mount-widget widget="attach-test"}}`,
 
     beforeEach() {
       createWidget("test-embedded", { tagName: "div.embedded" });
@@ -241,7 +241,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("custom attrs to a magic attached widget", {
-    template: `{{mount-widget widget="attach-test"}}`,
+    template: hbs`{{mount-widget widget="attach-test"}}`,
 
     beforeEach() {
       createWidget("testing", {
@@ -262,7 +262,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("handlebars d-icon", {
-    template: `{{mount-widget widget="hbs-icon-test" args=args}}`,
+    template: hbs`{{mount-widget widget="hbs-icon-test" args=args}}`,
 
     beforeEach() {
       createWidget("hbs-icon-test", {
@@ -278,7 +278,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   componentTest("handlebars i18n", {
     _translations: I18n.translations,
 
-    template: `{{mount-widget widget="hbs-i18n-test" args=args}}`,
+    template: hbs`{{mount-widget widget="hbs-i18n-test" args=args}}`,
 
     beforeEach() {
       createWidget("hbs-i18n-test", {
@@ -312,7 +312,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("handlebars #each", {
-    template: `{{mount-widget widget="hbs-each-test" args=args}}`,
+    template: hbs`{{mount-widget widget="hbs-each-test" args=args}}`,
 
     beforeEach() {
       createWidget("hbs-each-test", {
@@ -336,7 +336,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("widget decorating", {
-    template: `{{mount-widget widget="decorate-test"}}`,
+    template: hbs`{{mount-widget widget="decorate-test"}}`,
 
     beforeEach() {
       createWidget("decorate-test", {
@@ -363,7 +363,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("widget settings", {
-    template: `{{mount-widget widget="settings-test"}}`,
+    template: hbs`{{mount-widget widget="settings-test"}}`,
 
     beforeEach() {
       createWidget("settings-test", {
@@ -379,7 +379,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("override settings", {
-    template: `{{mount-widget widget="ov-settings-test"}}`,
+    template: hbs`{{mount-widget widget="ov-settings-test"}}`,
 
     beforeEach() {
       createWidget("ov-settings-test", {
@@ -399,7 +399,7 @@ discourseModule("Integration | Component | Widget | base", function (hooks) {
   });
 
   componentTest("get accessor", {
-    template: `{{mount-widget widget="get-accessor-test"}}`,
+    template: hbs`{{mount-widget widget="get-accessor-test"}}`,
 
     beforeEach() {
       createWidget("get-accessor-test", {

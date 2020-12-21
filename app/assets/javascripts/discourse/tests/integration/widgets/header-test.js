@@ -7,12 +7,13 @@ import {
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
 import { click } from "@ember/test-helpers";
+import hbs from "htmlbars-inline-precompile";
 
 discourseModule("Integration | Component | Widget | header", function (hooks) {
   setupRenderingTest(hooks);
 
   componentTest("rendering basics", {
-    template: '{{mount-widget widget="header"}}',
+    template: hbs`{{mount-widget widget="header"}}`,
     test(assert) {
       assert.ok(queryAll("header.d-header").length);
       assert.ok(queryAll("#site-logo").length);
@@ -20,8 +21,14 @@ discourseModule("Integration | Component | Widget | header", function (hooks) {
   });
 
   componentTest("sign up / login buttons", {
-    template:
-      '{{mount-widget widget="header" showCreateAccount=(action "showCreateAccount") showLogin=(action "showLogin") args=args}}',
+    template: hbs`
+      {{mount-widget
+        widget="header"
+        showCreateAccount=(action "showCreateAccount")
+        showLogin=(action "showLogin")
+        args=args
+      }}
+    `,
     anonymous: true,
 
     beforeEach() {
@@ -43,8 +50,14 @@ discourseModule("Integration | Component | Widget | header", function (hooks) {
   });
 
   componentTest("anon when login required", {
-    template:
-      '{{mount-widget widget="header" showCreateAccount=(action "showCreateAccount") showLogin=(action "showLogin") args=args}}',
+    template: hbs`
+      {{mount-widget
+        widget="header"
+        showCreateAccount=(action "showCreateAccount")
+        showLogin=(action "showLogin")
+        args=args
+      }}
+    `,
     anonymous: true,
 
     beforeEach() {
@@ -63,8 +76,14 @@ discourseModule("Integration | Component | Widget | header", function (hooks) {
   });
 
   componentTest("logged in when login required", {
-    template:
-      '{{mount-widget widget="header" showCreateAccount=(action "showCreateAccount") showLogin=(action "showLogin") args=args}}',
+    template: hbs`
+      {{mount-widget
+        widget="header"
+        showCreateAccount=(action "showCreateAccount")
+        showLogin=(action "showLogin")
+        args=args
+      }}
+    `,
 
     beforeEach() {
       this.set("args", { canSignUp: true });

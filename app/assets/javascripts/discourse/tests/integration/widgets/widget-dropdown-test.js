@@ -8,6 +8,7 @@ import {
 } from "discourse/tests/helpers/qunit-helpers";
 import I18n from "I18n";
 import { click } from "@ember/test-helpers";
+import hbs from "htmlbars-inline-precompile";
 
 const DEFAULT_CONTENT = {
   content: [
@@ -46,7 +47,7 @@ function body() {
   return queryAll("#my-dropdown .widget-dropdown-body")[0];
 }
 
-const TEMPLATE = `
+const TEMPLATE = hbs`
   {{mount-widget
     widget="widget-dropdown"
     args=(hash
@@ -132,7 +133,7 @@ discourseModule("Integration | Component | Widget | widget-dropdown", function (
   });
 
   componentTest("onChange action", {
-    template: `
+    template: hbs`
       <div id="test"></div>
       {{mount-widget
         widget="widget-dropdown"
