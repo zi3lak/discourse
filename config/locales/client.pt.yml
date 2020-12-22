@@ -778,7 +778,6 @@ pt:
         perm_denied_expl: "Negou a permissão para as notificações. Autorize as notificações através das configurações do seu navegador."
         disable: "Desativar Notificações"
         enable: "Ativar Notificações"
-        each_browser_note: "Nota: Tem que alterar esta configuração em todos os navegadores de internet que utiliza."
         consent_prompt: "Quer receber notificações instantâneas quando outras pessoas responderem às suas publicações?"
       dismiss: "Marcar como visto"
       dismiss_notifications: "Marcar Visto Tudo"
@@ -1422,7 +1421,6 @@ pt:
       options: "Opções"
       whisper: "susurro"
       unlist: "não listado"
-      blockquote_text: "Bloco de Citação"
       add_warning: "Este é um aviso oficial."
       toggle_whisper: "Alternar Sussuro"
       toggle_unlisted: "Alternar Não Listado"
@@ -1483,8 +1481,7 @@ pt:
       link_description: "insira aqui a descrição da hiperligação"
       link_dialog_title: "Inserir Hiperligação"
       link_optional_text: "título opcional"
-      quote_title: "Bloco de Citação"
-      quote_text: "Bloco de Citação"
+      blockquote_text: "Bloco de Citação"
       code_title: "Texto pré-formatado"
       code_text: "Indentar texto pré-formatado até 4 espaços"
       paste_code_text: "digite ou cole aqui o código"
@@ -1529,7 +1526,6 @@ pt:
           label: "Novo Tópico"
         shared_draft:
           label: "Rascunho Partilhado"
-          desc: "Escrever um rascunho de tópico que só pode ser visível pela equipa do site"
         toggle_topic_bump:
           label: "Alterar possibilidade de bump de tópico"
           desc: "Responder sem alterar a data de última resposta"

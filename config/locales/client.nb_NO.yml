@@ -667,7 +667,6 @@ nb_NO:
         perm_denied_expl: "Du tillot ikke varsler. Tillat varsler via innstillingene i din nettleser."
         disable: "Slå av varslinger"
         enable: "Slå på varslinger"
-        each_browser_note: "Merk: Du må endre denne innstillinger for hver nettleser du bruker."
         consent_prompt: "Ønsker du å motta skrivebordsvarsler når andre svarer på dine innlegg?"
       dismiss: "Avslå"
       dismiss_notifications: "Forkast alle"
@@ -1252,7 +1251,6 @@ nb_NO:
       options: "Alternativer"
       whisper: "hvisk"
       unlist: "skjult"
-      blockquote_text: "Sitatramme"
       add_warning: "Dette er en offisiell advarsel."
       toggle_whisper: "Slå på/av hvisking"
       toggle_unlisted: "Skjul eller gjør synlig"
@@ -1310,8 +1308,7 @@ nb_NO:
       link_description: "beskriv lenken her"
       link_dialog_title: "Sett inn hyperlenke"
       link_optional_text: "valgfri tittel"
-      quote_title: "Sitatramme"
-      quote_text: "Sitatramme"
+      blockquote_text: "Sitatramme"
       code_title: "Kodeutsnitt"
       code_text: "Skriv inn preformattert tekst med 4 mellomroms innrykk."
       paste_code_text: "skriv inn eller kopier kode her"
@@ -1353,7 +1350,6 @@ nb_NO:
           label: "Nytt emne"
         shared_draft:
           label: "Delt kladd"
-          desc: "Lag et emneutkast som kun er synlig for staben"
         toggle_topic_bump:
           label: "Slå på/av at emnet flyttes øverst"
     notifications:

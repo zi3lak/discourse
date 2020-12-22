@@ -770,7 +770,6 @@ da:
         perm_denied_expl: "Du nægtede adgang for notifikationer. Tillad notifikationer via indstillingerne i din browser."
         disable: "Deaktiver notifikationer"
         enable: "Aktiver notifikationer"
-        each_browser_note: "Bemærk: Du skal ændre indstillingen i alle dine browsere."
         consent_prompt: "Ønsker du live notifikationer, når folk svarer på dine indlæg?"
       dismiss: "Afvist"
       dismiss_notifications: "Afvis alle"
@@ -1428,7 +1427,6 @@ da:
       options: "Indstillinger"
       whisper: "hvisken"
       unlist: "Ikke listede"
-      blockquote_text: "Citatblok"
       add_warning: "Dette er en officiel advarsel."
       toggle_whisper: "Slå hvisken til/fra"
       toggle_unlisted: "Slå listning til/fra"
@@ -1491,8 +1489,7 @@ da:
       link_description: "skriv linkets beskrivelse her"
       link_dialog_title: "Indsæt link"
       link_optional_text: "evt. titel"
-      quote_title: "Citatblok"
-      quote_text: "Citatblok"
+      blockquote_text: "Citatblok"
       code_title: "Præformateret tekst"
       code_text: "indryk præformateret tekst med 4 mellemrum"
       paste_code_text: "skriv eller indsæt kode her"
@@ -1537,7 +1534,6 @@ da:
           label: "Nyt emne"
         shared_draft:
           label: "Delt Kladde"
-          desc: "Lav en kladde til et emne, der kun er synligt for hjælperteam"
         toggle_topic_bump:
           label: "Slå emne 'bump' til/fra"
           desc: "Svar uden at ændre den seneste svardato"

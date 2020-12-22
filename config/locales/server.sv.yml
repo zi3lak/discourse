@@ -51,6 +51,9 @@ sv:
   remove_posts_deleted_by_author: "Borttaget av författaren"
   redirect_warning: "Vi kunde inte verifiera att länken som du valt faktiskt har lagts upp i forumet. Välj länken nedan om du vill fortsätta ändå."
   on_another_topic: "I ett annat ämne"
+  inline_oneboxer:
+    topic_page_title_post_number: "Nr %{post_number}"
+    topic_page_title_post_number_by_user: "Nr %{post_number} av %{username}"
   themes:
     bad_color_scheme: "Kan inte uppdatera tema, ogiltig färgpalett"
     other_error: "Något blev fel när temat uppdaterades"
@@ -1700,6 +1703,7 @@ sv:
     body_min_entropy: "Minsta tillåtna entropi (unika tecken) som krävs för ett inläggs innehåll."
     allow_uppercase_posts: "Tillåt enbart versaler i ämnets rubrik eller innehåll."
     max_consecutive_replies: "Antal inlägg som en användare måste göra i rad inom ett ämne innan användaren hindras lägga till ytterligare ett svar."
+    enable_filtered_replies_view: '(n)-svarsknappen förminskar alla andra inlägg och visar bara det aktuella inlägget och dess svar.'
     title_fancy_entities: "Konvertera vanliga ASCII-tecken till häftiga HTML-enheter i ämnesrubriker, à la SmartyPants <a href='https://daringfireball.net/projects/smartypants/' target='_blank'>http://daringfireball.net/projects/smartypants/</a>"
     min_title_similar_length: "Minsta längd för en rubrik innan den kommer att kontrolleras för liknande ämnen."
     desktop_category_page_style: "Visuell stil för /kategorier-sidan."
@@ -1998,6 +2002,7 @@ sv:
     governing_law: "Gällande lag"
     city_for_disputes: "Domstol vid tvist"
     shared_drafts_category: "Aktivera funktionen Delade utkast genom att ange en kategori för ämnesutkast. Ämnen i den här kategorin undantas från ämneslistor för personalanvändare."
+    shared_drafts_min_trust_level: "Tillåt användare att se och redigera delade utkast."
     push_notifications_prompt: "Visa användarens samtycke genast."
     push_notifications_icon: "Utmärkelseikonen som visas i aviseringshörnet. En svartvit 96 x 96 stor PNG med genomskinlighet rekommenderas."
     base_font: "Bastypsnitt att använda för de flesta texter på webbplatsen. Teman kan åsidosätta via CSS-anpassade egenskapen `--font-family`."
@@ -2219,6 +2224,18 @@ sv:
   admin:
     email:
       sent_test: "skickat!"
+    user:
+      merge_user:
+        updating_username: "Uppdaterar användarnamn..."
+        changing_post_ownership: "Ändrar äganderätt till inlägget..."
+        merging_given_daily_likes: "Sammanslagning av dagliga gillanden..."
+        merging_post_timings: "Sammanslagning av tidpunkter för inlägg..."
+        merging_user_visits: "Sammanslagning av användarbesök..."
+        updating_site_settings: "Uppdaterar webbplatsinställningar..."
+        updating_user_stats: "Uppdaterar användarstatistik..."
+        merging_user_attributes: "Sammanslagning av användarattribut..."
+        updating_user_ids: "Uppdaterar användar-id..."
+        deleting_source_user: "Tar bort källanvändare..."
   user:
     deactivated: "Inaktiverades på grund av för många studsade e-postmeddelanden till '%{email}'."
     deactivated_by_staff: "Avaktiverades av personalen"

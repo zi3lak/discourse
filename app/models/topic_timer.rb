@@ -50,16 +50,18 @@ class TopicTimer < ActiveRecord::Base
       delete: 4,
       reminder: 5,
       bump: 6,
-      delete_replies: 7
+      delete_replies: 7,
+      silent_close: 8,
+      clear_slow_mode: 9
     )
   end
 
   def self.public_types
-    @_public_types ||= types.except(:reminder)
+    @_public_types ||= types.except(:reminder, :clear_slow_mode)
   end
 
   def self.private_types
-    @_private_types ||= types.only(:reminder)
+    @_private_types ||= types.only(:reminder, :clear_slow_mode)
   end
 
   def self.ensure_consistency!
@@ -97,6 +99,10 @@ class TopicTimer < ActiveRecord::Base
   end
   alias_method :cancel_auto_open_job, :cancel_auto_close_job
 
+  def cancel_auto_silent_close_job
+    Jobs.cancel_scheduled_job(:toggle_topic_closed, topic_timer_id: id)
+  end
+
   def cancel_auto_publish_to_category_job
     Jobs.cancel_scheduled_job(:publish_topic_to_category, topic_timer_id: id)
   end
@@ -115,6 +121,10 @@ class TopicTimer < ActiveRecord::Base
 
   def cancel_auto_delete_replies_job
     Jobs.cancel_scheduled_job(:delete_replies, topic_timer_id: id)
+  end
+
+  def cancel_auto_clear_slow_mode_job
+    Jobs.cancel_scheduled_job(:clear_slow_mode, topic_timer_id: id)
   end
 
   def schedule_auto_delete_replies_job(time)
@@ -143,6 +153,16 @@ class TopicTimer < ActiveRecord::Base
     )
   end
 
+  def schedule_auto_silent_close_job(time)
+    topic.update_status('closed', false, user) if topic&.closed
+
+    Jobs.enqueue_at(time, :toggle_topic_closed,
+      topic_timer_id: id,
+      silent: true,
+      state: true
+    )
+  end
+
   def schedule_auto_publish_to_category_job(time)
     Jobs.enqueue_at(time, :publish_topic_to_category, topic_timer_id: id)
   end
@@ -157,6 +177,10 @@ class TopicTimer < ActiveRecord::Base
 
   def schedule_auto_reminder_job(time)
     # noop, TODO(martin 2021-03-11): Remove this after timers migrated and outstanding jobs cancelled
+  end
+
+  def schedule_auto_clear_slow_mode_job(time)
+    Jobs.enqueue_at(time, :clear_slow_mode, topic_timer_id: id)
   end
 end
 

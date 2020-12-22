@@ -59,6 +59,7 @@ class User < ActiveRecord::Base
   has_many :group_requests, dependent: :delete_all
   has_many :muted_user_records, class_name: 'MutedUser', dependent: :delete_all
   has_many :ignored_user_records, class_name: 'IgnoredUser', dependent: :delete_all
+  has_many :do_not_disturb_timings, dependent: :delete_all
 
   # dependent deleting handled via before_destroy (special cases)
   has_many :user_actions
@@ -232,6 +233,13 @@ class User < ActiveRecord::Base
         filter: "%#{filter}%"
       )
     end
+  end
+
+  scope :watching_topic_when_mute_categories_by_default, ->(topic) do
+    joins(DB.sql_fragment("LEFT JOIN category_users ON category_users.user_id = users.id AND category_users.category_id = :category_id", category_id: topic.category_id))
+      .joins(DB.sql_fragment("LEFT JOIN topic_users ON topic_users.user_id = users.id AND topic_users.topic_id = :topic_id",  topic_id: topic.id))
+      .joins("LEFT JOIN tag_users ON tag_users.user_id = users.id AND tag_users.tag_id IN (#{topic.tag_ids.join(",").presence || 'NULL'})")
+      .where("category_users.notification_level > 0 OR topic_users.notification_level > 0 OR tag_users.notification_level > 0")
   end
 
   module NewTopicDuration
@@ -626,6 +634,10 @@ class User < ActiveRecord::Base
     }
 
     MessageBus.publish("/notification/#{id}", payload, user_ids: [id])
+  end
+
+  def publish_do_not_disturb(ends_at: nil)
+    MessageBus.publish("/do-not-disturb/#{id}", { ends_at: ends_at }, user_ids: [id])
   end
 
   def password=(password)
@@ -1240,7 +1252,7 @@ class User < ActiveRecord::Base
   end
 
   def email
-    primary_email.email
+    primary_email&.email
   end
 
   def email=(new_email)
@@ -1356,6 +1368,15 @@ class User < ActiveRecord::Base
 
   def encoded_username(lower: false)
     UrlHelper.encode_component(lower ? username_lower : username)
+  end
+
+  def do_not_disturb?
+    active_do_not_disturb_timings.exists?
+  end
+
+  def active_do_not_disturb_timings
+    now = Time.zone.now
+    do_not_disturb_timings.where('starts_at <= ? AND ends_at > ?', now, now)
   end
 
   protected

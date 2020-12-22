@@ -725,6 +725,9 @@ posting:
       ja: true
   max_consecutive_replies:
     default: 3
+  enable_filtered_replies_view:
+    default: false
+    client: true
   title_prettify:
     default: true
     locale_default:
@@ -772,6 +775,9 @@ posting:
   shared_drafts_category:
     type: category
     default: ""
+  shared_drafts_min_trust_level:
+    default: "staff"
+    enum: "TrustLevelAndStaffSetting"
   post_edit_time_limit:
     default: 1440
     max: 10080
@@ -1215,7 +1221,7 @@ files:
     list_type: compact
   authorized_extensions:
     client: true
-    default: "jpg|jpeg|png|gif|heic|heif"
+    default: "jpg|jpeg|png|gif|heic|heif|webp"
     refresh: true
     type: list
     list_type: compact
@@ -1599,7 +1605,7 @@ onebox:
     type: list
     list_type: compact
   enable_inline_onebox_on_all_domains:
-    default: false
+    default: true
   force_custom_user_agent_hosts:
     default: "http://codepen.io"
     type: list

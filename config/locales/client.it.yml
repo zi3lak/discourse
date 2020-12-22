@@ -411,6 +411,7 @@ it:
       topic: "Argomento:"
       filtered_topic: "Hai filtrato il contenuto revisionabile in un singolo Argomento"
       filtered_user: "Utente"
+      filtered_reviewed_by: "Revisionato da"
       show_all_topics: "mostra tutti gli argomenti"
       deleted_post: "(messaggio eliminato)"
       deleted_user: "(utente eliminato)"
@@ -868,7 +869,6 @@ it:
         perm_denied_expl: "Hai negato il permesso per le notifiche. Autorizza le notifiche tramite le impostazioni del tuo browser."
         disable: "Disabilita Notifiche"
         enable: "Abilita Notifiche"
-        each_browser_note: "Nota: devi modificare questa impostazione per ogni browser che utilizzi."
         consent_prompt: "Desideri ricevere notifiche in tempo reale quando qualcuno risponde a un tuo messaggio?"
       dismiss: "Ignora"
       dismiss_notifications: "Ignora tutti"
@@ -1682,7 +1682,6 @@ it:
       options: "Opzioni"
       whisper: "sussurra"
       unlist: "invisibile"
-      blockquote_text: "Citazione"
       add_warning: "Questo è un avvertimento ufficiale."
       toggle_whisper: "Attiva/Disattiva Sussurri"
       toggle_unlisted: "Rendi Invisibile"
@@ -1754,8 +1753,7 @@ it:
       link_dialog_title: "Inserisci il collegamento"
       link_optional_text: "titolo opzionale"
       link_url_placeholder: "Incolla un URL o digita per cercare argomenti"
-      quote_title: "Citazione"
-      quote_text: "Citazione"
+      blockquote_text: "Citazione"
       code_title: "Testo preformattato"
       code_text: "rientra il testo preformattato di 4 spazi"
       paste_code_text: "digita o incolla il codice qui"
@@ -1809,7 +1807,6 @@ it:
           label: "Nuovo Argomento"
         shared_draft:
           label: "Bozza Condivisa"
-          desc: "Prepara la bozza di un argomento che sarà visibile solo allo Staff"
         toggle_topic_bump:
           label: "Commuta riproposizione argomenti"
           desc: "Rispondi senza cambiare la data dell'ultima risposta"
@@ -2145,6 +2142,7 @@ it:
         select: "Gli utenti possono pubblicare in questo argomento solo una volta ogni:"
         description: "Per promuovere discussioni ponderate in argomenti in rapida evoluzione o controversi, gli utenti devono attendere prima di pubblicare nuovamente in questo argomento."
         save: "Abilita"
+        enabled_until: "(Facoltativo) Attivato fino a:"
         remove: "Disattiva"
         hours: "Ore:"
         minutes: "Minuti:"
@@ -3241,6 +3239,17 @@ it:
     safe_mode:
       enabled: "La modalità sicura è attiva, per disattivarla chiudi il browser"
     image_removed: "(immagine rimossa)"
+    do_not_disturb:
+      title: "Non disturbare per..."
+      save: "Salva"
+      label: "Non disturbare"
+      remaining: "%{remaining} rimanenti"
+      options:
+        half_hour: "30 minuti"
+        one_hour: "un'ora"
+        two_hours: "due ore"
+        tomorrow: "Fino a domani"
+        custom: "Personalizzato"
   admin_js:
     type_to_filter: "digita per filtrare..."
     admin:

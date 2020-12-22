@@ -845,7 +845,6 @@ pt_BR:
         perm_denied_expl: "Você negou permissão para notificações. Permita notificações nas configurações do seu navegador."
         disable: "Desativar Notificações"
         enable: "Ativar Notificações"
-        each_browser_note: "Obs.: Você deve modificar esta configuração em todos os navegadores que você usa."
         consent_prompt: "Você quer notificações ao vivo quando as pessoas respondem às suas postagens?"
       dismiss: "Descartar"
       dismiss_notifications: "Descartar Tudo"
@@ -1580,7 +1579,6 @@ pt_BR:
       options: "Opções"
       whisper: "sussuro"
       unlist: "não listado"
-      blockquote_text: "Bloco de Citação"
       add_warning: "Esta é uma advertência oficial."
       toggle_whisper: "Alternar Sussuro"
       toggle_unlisted: "Alternar Não Listado"
@@ -1646,8 +1644,7 @@ pt_BR:
       link_dialog_title: "Inserir Hyperlink"
       link_optional_text: "título opcional"
       link_url_placeholder: "Cole uma URL ou digite para pesquisar tópicos"
-      quote_title: "Bloco de Citação"
-      quote_text: "Bloco de Citação"
+      blockquote_text: "Bloco de Citação"
       code_title: "Texto pré-formatado"
       code_text: "identar texto pré-formatado por 4 espaços"
       paste_code_text: "digite ou cole o código aqui"
@@ -1693,7 +1690,6 @@ pt_BR:
           label: "Novo Tópico"
         shared_draft:
           label: "Rascunho Compartilhado"
-          desc: "Elabore um tópico que será visível somente para a staff"
         toggle_topic_bump:
           label: "Alternar promoção de tópico"
           desc: "Responder sem alterar a data da última resposta"

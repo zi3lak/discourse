@@ -51,6 +51,9 @@ pl_PL:
   remove_posts_deleted_by_author: "Usunięte przez autora"
   redirect_warning: "Nie byliśmy w stanie zweryfikować, że wybrany przez Ciebie link został rzeczywiście wysłany na forum. Aby kontynować mimo tego, wybierz link poniżej."
   on_another_topic: "Na innym temacie"
+  inline_oneboxer:
+    topic_page_title_post_number: "#%{post_number}"
+    topic_page_title_post_number_by_user: "#%{post_number} przez %{username}"
   themes:
     bad_color_scheme: "Nie można zaktualizować szablonu, nieprawidłowa paleta kolorów"
     other_error: "Coś poszło nie tak podczas aktualizacji szablonu"
@@ -94,7 +97,7 @@ pl_PL:
     incoming:
       default_subject: "Ten temat wymaga tytułu"
       show_trimmed_content: "Pokaż skróconą zawartość"
-      maximum_staged_user_per_email_reached: "Osiągnięto maksymalną ilość użytkowników zarejestrowanych przez email."
+      maximum_staged_user_per_email_reached: "Osiągnięto maksymalną ilość użytkowników etapowych zarejestrowanych przez email."
       no_subject: "(brak tematu)"
       no_body: "(brak treści wpisu)"
       missing_attachment: "(Brakuje załącznika %{filename})"
@@ -1886,8 +1889,8 @@ pl_PL:
     delete_email_logs_after_days: "Usuń logi email po (N) dniach. 0 by trzymać w nieskończoność"
     disallow_reply_by_email_after_days: "Nie zezwalaj na wiadomości e-mail po (N) dniach. 0, aby zachować na czas nieokreślony"
     max_emails_per_day_per_user: "Maksymalna liczba maili, jakie użytkownik może wysłać w ciągu dnia. 0 wyłącza ograniczenie."
-    enable_staged_users: "Automatycznie twórz wystawianych użytkowników podczas przetwarzania przychodzących emaili."
-    maximum_staged_users_per_email: "Maksymalna liczba wystawionych stworzonych użytkowników podczas przetwarzania przychodzących emaili."
+    enable_staged_users: "Automatycznie twórz użytkowników etapowych podczas przetwarzania przychodzących wiadomości e-mail."
+    maximum_staged_users_per_email: "Maksymalna liczba użytkowników etapowych utworzonych podczas przetwarzania przychodzącej wiadomości e-mail."
     auto_generated_allowlist: "Lista adresów e-mail, które nie będą sprawdzane pod kątem zawartości generowanej automatycznie. Przykład: foo@bar.com|discourse@bar.com"
     block_auto_generated_emails: "Odrzucaj maile przychodzące zidentyfikowane jako wysłane automatycznie."
     ignore_by_title: "Ignoruj przychodzące wiadomości e-mail w oparciu o ich tytuł."
@@ -2115,6 +2118,7 @@ pl_PL:
     governing_law: "Obowiązujące prawo"
     city_for_disputes: "Miasto dyskusji"
     shared_drafts_category: "Włącz funkcję współdzielonych szkiców przez wyznaczenie kategorii dla szkiców tematów. Tematy w tej kategorii zostaną ukryte z list tematów dla personelu."
+    shared_drafts_min_trust_level: "Zezwalaj użytkownikom na wyświetlanie i edycję wspólnych szkiców."
     push_notifications_prompt: "Wyświetl monit o zgodę użytkownika."
     push_notifications_icon: "Ikona odznaki pojawiająca się w rogu powiadomień. Zalecany jest monochromyczny PNG 96×96 z przezroczystym tłem."
     base_font: "Podstawowa czcionka używana dla większości tekstu w witrynie. Motywy można nadpisywać za pomocą niestandardowej właściwości CSS `--font-family`."
@@ -2374,6 +2378,18 @@ pl_PL:
   admin:
     email:
       sent_test: "wysłany!"
+    user:
+      merge_user:
+        updating_username: "Aktualizuję nazwę użytkownika ..."
+        changing_post_ownership: "Zmiana właściciela wpisu..."
+        merging_given_daily_likes: "Łączenie oddanych dziennych polubień..."
+        merging_post_timings: "Łączenie czasów postów..."
+        merging_user_visits: "Łączenie odwiedzin użytkownika..."
+        updating_site_settings: "Aktualizowanie ustawień strony..."
+        updating_user_stats: "Aktualizowanie statystyk użytkownika..."
+        merging_user_attributes: "Łączenie atrybutów użytkownika..."
+        updating_user_ids: "Aktualizuję identyfikatory użytkowników..."
+        deleting_source_user: "Usuwanie użytkownika źródłowego..."
   user:
     deactivated: "Został dezaktywowany w związku ze zbyt dużą liczbą odrzuconych emaili na '%{email}'."
     deactivated_by_staff: "Wyłączone przez personel"
@@ -2409,7 +2425,7 @@ pl_PL:
       domain_not_allowed: "Błędny adres strony internetowej. Dozwolone domeny: %{domains}"
     auto_rejected: "Odrzucono automatycznie ze względu na wiek. Zobacz ustawienia auto_handle_queued_age witryny."
     destroy_reasons:
-      unused_staged_user: "Nieużywany użytkownik wystawiony"
+      unused_staged_user: "Nieużywany użytkownik etapowy"
       fixed_primary_email: "Ustalony główny adres e-mail wystawionego użytkownika"
       same_ip_address: "Taki sam adres IP (%{ip_address}) jak inni użytkownicy"
       inactive_user: "Nieaktywny użytkownik"
@@ -4553,7 +4569,7 @@ pl_PL:
       fast_typer: "Nowy użytkownik wpisał swój pierwszy post podejrzanie szybko, co sugeruje zachowanie bota lub spamera. Zobacz `min_first_post_typing_time`."
       auto_silence_regexp: "Nowy użytkownik, którego pierwszy post pasuje do ustawienia `auto_silence_first_post_regex`."
       watched_word: "Ten post zawierał obserwowane słowo. Zobacz listę <a href='%{base_url}/admin/logs/watched_words'>obserwowanych słów</a>."
-      staged: "Nowe tematy i posty dla użytkowników przejściowych muszą zostać zatwierdzone przez personel. Zobacz `approve_unless_staged`."
+      staged: "Nowe tematy i posty dla użytkowników etapowych muszą zostać zatwierdzone przez personel. Zobacz `approve_unless_staged`."
       category: "Posty w tej kategorii wymagają ręcznego zatwierdzenia przez personel. Zobacz ustawienia kategorii."
       must_approve_users: "Wszyscy nowi użytkownicy muszą zostać zatwierdzeni przez personel. Zobacz `must_approve_users`."
       invite_only: "Wszyscy nowi użytkownicy powinni zostać zaproszeni. Zobacz `invite_only`."
