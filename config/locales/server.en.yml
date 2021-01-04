@@ -473,16 +473,16 @@ en:
 
       - Who would be interested in this? Why does it matter? What kind of responses do you want?
 
-      - Include commonly used words in your topic so others can *find* it. To group your topic with related topics, select a category.
+      - Include commonly used words in your topic so others can *find* it. To group your topic with related topics, select a category (or tag).
 
       For more, [see our community guidelines](%{base_path}/guidelines). This panel will only appear for your first %{education_posts_text}.
 
     "new-reply": |
       Welcome to %{site_name} &mdash; **thanks for contributing!**
 
-      - Does your reply improve the conversation in some way?
-
       - Be kind to your fellow community members.
+      
+      - Does your reply improve the conversation?
 
       - Constructive criticism is welcome, but criticize *ideas*, not people.
 
@@ -1417,6 +1417,7 @@ en:
     github_config_warning: 'The server is configured to allow signup and login with GitHub (enable_github_logins), but the client id and secret values are not set. Go to <a href="%{base_path}/admin/site_settings">the Site Settings</a> and update the settings. <a href="https://meta.discourse.org/t/configuring-github-login-for-discourse/13745" target="_blank">See this guide to learn more</a>.'
     s3_config_warning: 'The server is configured to upload files to S3, but at least one the following setting is not set: s3_access_key_id, s3_secret_access_key, s3_use_iam_profile, or s3_upload_bucket. Go to <a href="%{base_path}/admin/site_settings">the Site Settings</a> and update the settings. <a href="https://meta.discourse.org/t/how-to-set-up-image-uploads-to-s3/7229" target="_blank">See "How to set up image uploads to S3?" to learn more</a>.'
     s3_backup_config_warning: 'The server is configured to upload backups to S3, but at least one the following setting is not set: s3_access_key_id, s3_secret_access_key, s3_use_iam_profile, or s3_backup_bucket. Go to <a href="%{base_path}/admin/site_settings">the Site Settings</a> and update the settings. <a href="https://meta.discourse.org/t/how-to-set-up-image-uploads-to-s3/7229" target="_blank">See "How to set up image uploads to S3?" to learn more</a>.'
+    s3_cdn_warning: 'The server is configured to upload files to S3, but there is no S3 CDN configured. This can lead to expensive S3 costs and slower site performance. <a href="https://meta.discourse.org/t/-/148916" target="_blank">See "Using Object Storage for Uploads" to learn more</a>.'
     image_magick_warning: 'The server is configured to create thumbnails of large images, but ImageMagick is not installed. Install ImageMagick using your favorite package manager or <a href="https://www.imagemagick.org/script/download.php" target="_blank">download the latest release</a>.'
     failing_emails_warning: 'There are %{num_failed_jobs} email jobs that failed. Check your app.yml and ensure that the mail server settings are correct. <a href="%{base_path}/sidekiq/retries" target="_blank">See the failed jobs in Sidekiq</a>.'
     subfolder_ends_in_slash: "Your subfolder setup is incorrect; the DISCOURSE_RELATIVE_URL_ROOT ends in a slash."
@@ -2182,6 +2183,7 @@ en:
     blur_tl0_flagged_posts_media: "Blur flagged posts images to hide potentially NSFW content."
     enable_page_publishing: "Allow staff members to publish topics to new URLs with their own styling."
     show_published_pages_login_required: "Anonymous users can see published pages, even when login is required."
+    skip_auto_delete_reply_likes: "When automatically deleting old replies, skip deleting posts with this number of likes or more."
 
     default_email_digest_frequency: "How often users receive summary emails by default."
     default_include_tl0_in_digests: "Include posts from new users in summary emails by default. Users can change this in their preferences."
@@ -2902,9 +2904,11 @@ en:
     tl2_promotion_message:
       subject_template: "Congratulations on your trust level promotion!"
       text_body_template: |
-        We’ve promoted you up a [trust level](https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/)!
+        We’ve promoted you up another [trust level](https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/)!
 
-        We invite you to keep getting involved – we enjoy having you around.
+        As an experienced user, you might appreciate [this list of handy tips and tricks](https://blog.discourse.org/2016/12/discourse-new-user-tips-and-tricks/).
+        
+        We invite you to keep getting involved – we enjoy having you around. 
 
     backup_succeeded:
       title: "Backup Succeeded"

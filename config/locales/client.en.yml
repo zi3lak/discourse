@@ -2306,14 +2306,14 @@ en:
         UNREAD, plural,
         =0 {}
         one {
-        is <a href='{basePath}/unread'>1 unread</a>
+        is <a href='{basePath}/unread'># unread</a>
         } other {
         are <a href='{basePath}/unread'># unread</a>
         }
         } {
         NEW, plural,
         =0 {}
-        one { {BOTH, select, true{and } false {is } other{}} <a href='{basePath}/new'>1 new</a> topic}
+        one { {BOTH, select, true{and } false {is } other{}} <a href='{basePath}/new'># new</a> topic}
         other { {BOTH, select, true{and } false {are } other{}} <a href='{basePath}/new'># new</a> topics}
         } remaining, or {CATEGORY, select, true {browse other topics in {catLink}} false {{latestLink}} other {}}"
 
@@ -2753,8 +2753,8 @@ en:
         one: "View this post and its reply"
         other: "View this post and its %{count} replies"
       filtered_replies_viewing:
-          one: "Viewing %{count} reply to"
-          other: "Viewing %{count} replies to"
+        one: "Viewing %{count} reply to"
+        other: "Viewing %{count} replies to"
 
       in_reply_to: "Load parent post"
 
@@ -3101,7 +3101,7 @@ en:
       delete_spammer: "Delete Spammer"
 
       # keys ending with _MF use message format, see https://meta.discourse.org/t/message-format-support-for-localization/7035 for details
-      delete_confirm_MF: "You are about to delete {POSTS, plural, one {<b>1</b> post} other {<b>#</b> posts}} and {TOPICS, plural, one {<b>1</b> topic} other {<b>#</b> topics}} from this user, remove their account, block signups from their IP address <b>{ip_address}</b>, and add their email address <b>{email}</b> to a permanent block list. Are you sure this user is really a spammer?"
+      delete_confirm_MF: "You are about to delete {POSTS, plural, one {<b>#</b> post} other {<b>#</b> posts}} and {TOPICS, plural, one {<b>#</b> topic} other {<b>#</b> topics}} from this user, remove their account, block signups from their IP address <b>{ip_address}</b>, and add their email address <b>{email}</b> to a permanent block list. Are you sure this user is really a spammer?"
       yes_delete_spammer: "Yes, Delete Spammer"
       ip_address_missing: "(N/A)"
       hidden_email_address: "(hidden)"
@@ -3174,7 +3174,7 @@ en:
 
     # keys ending with _MF use message format, see https://meta.discourse.org/t/message-format-support-for-localization/7035 for details
     posts_likes_MF: |
-      This topic has {count, plural, one {1 reply} other {# replies}} {ratio, select,
+      This topic has {count, plural, one {# reply} other {# replies}} {ratio, select,
         low {with a high like to post ratio}
         med {with a very high like to post ratio}
         high {with an extremely high like to post ratio}
@@ -3549,7 +3549,6 @@ en:
         two_hours: "2 hours"
         tomorrow: "Until tomorrow"
         custom: "Custom"
-
 
   # This section is exported to the javascript for i18n in the admin section
   admin_js:
@@ -4607,7 +4606,7 @@ en:
           description: "users with penalties cannot reach TL3"
 
         # keys ending with _MF use message format, see https://meta.discourse.org/t/message-format-support-for-localization/7035 for details
-        delete_all_posts_confirm_MF: "You are about to delete {POSTS, plural, one {1 post} other {# posts}} and {TOPICS, plural, one {1 topic} other {# topics}}. Are you sure?"
+        delete_all_posts_confirm_MF: "You are about to delete {POSTS, plural, one {# post} other {# posts}} and {TOPICS, plural, one {# topic} other {# topics}}. Are you sure?"
         silence: "Silence"
         unsilence: "Unsilence"
         silenced: "Silenced?"
