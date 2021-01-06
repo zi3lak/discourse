@@ -2911,6 +2911,13 @@ en:
           html_part:
             title: "Show the html part of the email"
             button: "HTML"
+          imap_part:
+            title: "Show the IMAP details of the email"
+            button: "IMAP"
+            uid: "UID"
+            uid_validity: "UID Validity"
+            sync: "Needs Sync"
+            group_id: "Group ID"
 
       bookmarks:
         create: "Create bookmark"

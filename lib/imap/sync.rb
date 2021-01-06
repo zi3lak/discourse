@@ -59,7 +59,7 @@ module Imap
         # back to the pool.
         ActiveRecord::Base.connection_handler.clear_active_connections!
 
-        idle_polling_mins = SiteSetting.imap_polling_period_mins.minutes.to_i
+        idle_polling_mins = SiteSetting.imap_polling_period_mins.minutes.to_i / 4
         ImapSyncLog.debug("Going IDLE for #{idle_polling_mins} seconds to wait for more work", @group)
 
         @provider.imap.idle(idle_polling_mins) do |resp|

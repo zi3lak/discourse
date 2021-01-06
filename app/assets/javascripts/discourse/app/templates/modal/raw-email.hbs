@@ -21,6 +21,14 @@
                  class=(if showHtmlPart "active")
       }}
     {{/if}}
+
+    {{#if imapPart}}
+      {{d-button action=(action "displayIMAPPart")
+                 label="post.raw_email.displays.imap_part.button"
+                 title="post.raw_email.displays.imap_part.title"
+                 class=(if showIMAPPart "active")
+      }}
+    {{/if}}
   </div>
 
   <div class="incoming-email-content">
@@ -38,6 +46,29 @@
 
     {{#if showHtmlPart}}
       {{iframed-html html=htmlPart className="incoming-email-html-part"}}
+    {{/if}}
+
+    {{#if showImapPart}}
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>{{i18n "post.raw_email.displays.imap_part.uid"}}</td>
+            <td>{{imapPart.imap_uid}}</td>
+          </tr>
+          <tr>
+            <td>{{i18n "post.raw_email.displays.imap_part.uid_validity"}}</td>
+            <td>{{imapPart.imap_uid_validity}}</td>
+          </tr>
+          <tr>
+            <td>{{i18n "post.raw_email.displays.imap_part.sync"}}</td>
+            <td>{{imapPart.imap_sync}}</td>
+          </tr>
+          <tr>
+            <td>{{i18n "post.raw_email.displays.imap_part.group_id"}} </td>
+            <td>{{imapPart.imap_group_id}}</td>
+          </tr>
+        </tbody>
+      </table>
     {{/if}}
   </div>
 {{/d-modal-body}}

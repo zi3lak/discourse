@@ -15,7 +15,7 @@ RSpec.describe Jobs::GroupSmtpEmail do
     {
       group_id: group.id,
       post_id: post_id,
-      email: "test@test.com"
+      emails: ["test@test.com"]
     }
   end
 

@@ -98,7 +98,7 @@ class PostsController < ApplicationController
                                         add_raw: true,
                                         add_title: true,
                                         all_post_actions: counts)
-                                      )
+                        )
       end
     end
   end
@@ -132,7 +132,7 @@ class PostsController < ApplicationController
                                         PostSerializer,
                                         scope: guardian,
                                         add_excerpt: true)
-                                      )
+                        )
       end
     end
 
@@ -144,10 +144,20 @@ class PostsController < ApplicationController
 
   def raw_email
     params.require(:id)
-    post = Post.unscoped.find(params[:id].to_i)
+    post = Post.unscoped.includes(topic: :incoming_email).find(params[:id].to_i)
     guardian.ensure_can_view_raw_email!(post)
     text, html = Email.extract_parts(post.raw_email)
-    render json: { raw_email: post.raw_email, text_part: text, html_part: html }
+
+    imap = if post.is_first_post? && post.incoming_email.imap_uid.present?
+      incoming_email = post.incoming_email
+             {
+               imap_uid: incoming_email.imap_uid,
+               imap_uid_validity: incoming_email.imap_uid_validity,
+               imap_sync: incoming_email.imap_sync,
+               imap_group_id: incoming_email.imap_group_id
+             }
+    end
+    render json: { raw_email: post.raw_email, text_part: text, html_part: html, imap: imap }
   end
 
   def short_link
@@ -195,8 +205,8 @@ class PostsController < ApplicationController
     post.image_sizes = params[:image_sizes] if params[:image_sizes].present?
 
     if !guardian.public_send("can_edit?", post) &&
-       post.user_id == current_user.id &&
-       post.edit_time_limit_expired?(current_user)
+        post.user_id == current_user.id &&
+        post.edit_time_limit_expired?(current_user)
 
       return render_json_error(I18n.t('too_late_to_edit'))
     end
@@ -556,8 +566,8 @@ class PostsController < ApplicationController
 
     posts = user_posts(guardian, user.id, offset: offset, limit: limit)
       .where(id: PostAction.where(post_action_type_id: PostActionType.notify_flag_type_ids)
-                                   .where(disagreed_at: nil)
-                                   .select(:post_id))
+      .where(disagreed_at: nil)
+      .select(:post_id))
 
     render_serialized(posts, AdminUserActionSerializer)
   end
@@ -680,13 +690,13 @@ class PostsController < ApplicationController
 
     Post.plugin_permitted_create_params.each do |key, value|
       if value[:plugin].enabled?
-        permitted <<  case value[:type]
-                      when :string
-                        key.to_sym
-                      when :array
-                        { key => [] }
-                      when :hash
-                        { key => {} }
+        permitted << case value[:type]
+                     when :string
+                       key.to_sym
+                     when :array
+                       { key => [] }
+                     when :hash
+                       { key => {} }
         end
       end
     end
@@ -779,8 +789,8 @@ class PostsController < ApplicationController
       .to_a
       .concat([["user", current_user.id]])
       .sort { |x, y| x[0] <=> y[0] }.join do |x, y|
-        "#{x}:#{y}"
-      end)
+                                          "#{x}:#{y}"
+                                        end)
   end
 
   def display_post(post)
@@ -818,10 +828,10 @@ class PostsController < ApplicationController
     post.topic = Topic.with_deleted.find(post.topic_id)
 
     if !post.topic ||
-       (
-        (post.deleted_at.present? || post.topic.deleted_at.present?) &&
-        !guardian.can_moderate_topic?(post.topic)
-       )
+        (
+          (post.deleted_at.present? || post.topic.deleted_at.present?) &&
+          !guardian.can_moderate_topic?(post.topic)
+    )
       raise Discourse::NotFound
     end
 

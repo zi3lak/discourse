@@ -597,7 +597,7 @@ class PostAlerter
         Jobs.enqueue(:group_smtp_email,
           group_id: group.id,
           post_id: post.id,
-          email: email_addresses.to_a - [group.email_username])
+          emails: email_addresses.to_a - [group.email_username])
       end
     end
 

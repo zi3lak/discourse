@@ -9,12 +9,14 @@ export default Controller.extend(ModalFunctionality, {
   rawEmail: "",
   textPart: "",
   htmlPart: "",
+  imapPart: "",
 
   tab: "raw",
 
   showRawEmail: equal("tab", "raw"),
   showTextPart: equal("tab", "text_part"),
   showHtmlPart: equal("tab", "html_part"),
+  showImapPart: equal("tab", "imap_part"),
 
   onShow() {
     this.send("displayRaw");
@@ -26,6 +28,7 @@ export default Controller.extend(ModalFunctionality, {
         rawEmail: result.raw_email,
         textPart: result.text_part,
         htmlPart: result.html_part,
+        imapPart: result.imap,
       })
     );
   },
@@ -36,6 +39,7 @@ export default Controller.extend(ModalFunctionality, {
         rawEmail: result.raw_email,
         textPart: result.text_part,
         htmlPart: result.html_part,
+        imapPart: result.imap,
       })
     );
   },
@@ -49,6 +53,9 @@ export default Controller.extend(ModalFunctionality, {
     },
     displayHtmlPart() {
       this.set("tab", "html_part");
+    },
+    displayIMAPPart() {
+      this.set("tab", "imap_part");
     },
   },
 });

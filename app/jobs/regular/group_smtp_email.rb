@@ -9,7 +9,7 @@ module Jobs
     def execute(args)
       group = Group.find_by(id: args[:group_id])
       post = Post.find_by(id: args[:post_id])
-      email = args[:email]
+      emails = args[:emails]
 
       # There is a rare race condition causing the Imap::Sync class to create
       # an incoming email and associated post/topic, which then kicks off
@@ -24,25 +24,28 @@ module Jobs
         return
       end
 
-      ImapSyncLog.debug("Sending SMTP email for post #{post.id} in topic #{post.topic_id} to #{email}.", group)
+      ImapSyncLog.debug("Sending SMTP email for post #{post.id} in topic #{post.topic_id} to #{emails.join(", ")}.", group)
 
-      recipient_user = ::UserEmail.find_by(email: email, primary: true)&.user
-      message = GroupSmtpMailer.send_mail(group, email, post)
-      Email::Sender.new(message, :group_smtp, recipient_user).send
+      emails.each do |email|
+        recipient_user = ::UserEmail.find_by(email: email, primary: true)&.user
+        message = GroupSmtpMailer.send_mail(group, email, post)
+        Email::Sender.new(message, :group_smtp, recipient_user).send
 
-      # Create an incoming email record to avoid importing again from IMAP
-      # server.
-      IncomingEmail.create!(
-        user_id: post.user_id,
-        topic_id: post.topic_id,
-        post_id: post.id,
-        raw: message.to_s,
-        subject: message.subject,
-        message_id: message.message_id,
-        to_addresses: message.to,
-        cc_addresses: message.cc,
-        from_address: message.from
-      )
+        # Create an incoming email record to avoid importing again from IMAP
+        # server; this will be parsed as an "old" email and the IMAP details
+        # like the UID will be updated via the Imap::Sync class.
+        IncomingEmail.create!(
+          user_id: post.user_id,
+          topic_id: post.topic_id,
+          post_id: post.id,
+          raw: message.to_s,
+          subject: message.subject,
+          message_id: message.message_id,
+          to_addresses: message.to,
+          cc_addresses: message.cc,
+          from_address: message.from
+        )
+      end
     end
   end
 end
