@@ -380,12 +380,27 @@ class Auth::DefaultCurrentUserProvider
   def rate_limit_admin_api_requests(api_key)
     return if Rails.env == "profile"
 
-    RateLimiter.new(
+    global_limit = RateLimiter.new(
+      nil,
+      "admin_api_min",
+      GlobalSetting.max_admin_api_reqs_per_minute,
+      60
+    )
+
+    key_limit = RateLimiter.new(
       nil,
       "admin_api_min_#{ApiKey.hash_key(api_key)}",
       GlobalSetting.max_admin_api_reqs_per_key_per_minute,
       60
-    ).performed!
+    )
+
+    global_limit.performed!
+    begin
+      key_limit.performed!
+    rescue RateLimiter::LimitExceeded
+      global_limit.rollback!
+      raise
+    end
   end
 
   def can_write?
