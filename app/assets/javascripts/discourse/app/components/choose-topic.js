@@ -25,7 +25,7 @@ export default Component.extend({
 
     if (this.loadOnInit && !isEmpty(this.additionalFilters)) {
       searchForTerm(this.additionalFilters, {}).then((results) => {
-        if (results && results.posts && results.posts.length > 0) {
+        if (results?.posts?.length > 0) {
           this.set(
             "topics",
             results.posts

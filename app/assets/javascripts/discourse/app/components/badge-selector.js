@@ -28,7 +28,7 @@ export default Component.extend({
       allowAny: false,
       items: makeArray(this.badgeNames),
       single: this.single,
-      updateData: opts && opts.updateData ? opts.updateData : false,
+      updateData: opts?.updateData ? opts.updateData : false,
       template: findRawTemplate("badge-selector-autocomplete"),
 
       onChangeItems(items) {
