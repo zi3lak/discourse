@@ -97,13 +97,22 @@ def compress_node(from, to)
   source_map_url = cdn_path "/assets/#{to}.map"
   base_source_map = assets_path + assets_additional_path
 
-  # cmd = <<~EOS
-  #   uglifyjs '#{assets_path}/#{from}' -m -o '#{to_path}' --source-map "base='#{base_source_map}',root='#{source_map_root}',url='#{source_map_url}'"
-  # EOS
+  compression_option = ENV["COMPRESS_JS"] == "1" ? "-c " : ""
 
-  cmd = <<~EOS
-    ./node_modules/esbuild/bin/esbuild '#{assets_path}/#{from}' --outfile='#{to_path}' --minify --sourcemap --source-root='#{source_map_root}'  --sources-content=false --metafile
-  EOS
+  case ENV["COMPRESSOR"]
+  when 'terser'
+    cmd = <<~EOS
+      terser '#{assets_path}/#{from}' -m #{compression_option} -o '#{to_path}' --source-map "base='#{base_source_map}',root='#{source_map_root}',url='#{source_map_url}'"
+    EOS
+  when 'esbuild'
+    cmd = <<~EOS
+      ./node_modules/esbuild/bin/esbuild '#{assets_path}/#{from}' --outfile='#{to_path}' --minify --sourcemap --source-root='#{source_map_root}'  --sources-content=false --metafile
+    EOS
+  else
+    cmd = <<~EOS
+      uglifyjs '#{assets_path}/#{from}' -m #{compression_option} -o '#{to_path}' --source-map "base='#{base_source_map}',root='#{source_map_root}',url='#{source_map_url}'"
+    EOS
+  end
 
   STDERR.puts cmd
   result = `#{cmd} 2>&1`
