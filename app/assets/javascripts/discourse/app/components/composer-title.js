@@ -182,7 +182,7 @@ export default Component.extend({
   },
 
   changeTitle(val) {
-    if (val?.length > 0) {
+    if (val && val.length > 0) {
       this.set("composer.title", val.trim());
     }
   },

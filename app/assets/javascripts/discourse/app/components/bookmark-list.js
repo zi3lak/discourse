@@ -41,7 +41,7 @@ export default Component.extend({
 
   @action
   screenExcerptForExternalLink(event) {
-    if (event.target?.tagName === "A") {
+    if (event.target && event.target.tagName === "A") {
       let link = event.target;
       if (shouldOpenInNewTab(link.href)) {
         openLinkInNewTab(link);
