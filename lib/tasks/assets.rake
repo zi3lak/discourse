@@ -102,7 +102,7 @@ def compress_node(from, to)
   # EOS
 
   cmd = <<~EOS
-    esbuild '#{assets_path}/#{from}' --outfile='#{to_path}' --minify --sourcemap
+    ./node_modules/esbuild/bin/esbuild '#{assets_path}/#{from}' --outfile='#{to_path}' --minify --sourcemap
   EOS
 
   STDERR.puts cmd
