@@ -106,7 +106,7 @@ def compress_node(from, to)
     EOS
   when 'esbuild'
     cmd = <<~EOS
-      ./node_modules/esbuild/bin/esbuild '#{assets_path}/#{from}' --outfile='#{to_path}' --minify --sourcemap --source-root='#{source_map_root}'  --sources-content=false --metafile
+      ./node_modules/esbuild/bin/esbuild '#{assets_path}/#{from}' --outfile='#{to_path}' --minify --sourcemap --source-root='#{source_map_root}'
     EOS
   else
     cmd = <<~EOS
