@@ -219,7 +219,6 @@ export function acceptance(name, optionsOrCallback) {
       if (LEGACY_ENV) {
         getApplication().__registeredObjects__ = false;
         getApplication().reset();
-        getApplication()._registerThemeSettings();
       }
       this.container = getOwner(this);
       if (LEGACY_ENV && loggedIn) {
@@ -273,7 +272,6 @@ export function acceptance(name, optionsOrCallback) {
       if (LEGACY_ENV) {
         app.__registeredObjects__ = false;
         app.reset();
-        app._registerThemeSettings();
       }
 
       // We do this after reset so that the willClearRender will have already fired
