@@ -25,7 +25,7 @@ else
   gem 'activerecord', '6.0.3.5'
   gem 'activesupport', '6.0.3.5'
   gem 'railties', '6.0.3.5'
-  gem 'sprockets-rails', git: 'https://github.com/pmusaraj/sprockets-rails.git'
+  gem 'sprockets-rails'
 end
 
 gem 'json'
