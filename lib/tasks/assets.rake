@@ -150,7 +150,7 @@ end
 
 # different brotli versions use different parameters
 def brotli_command(path, max_compress)
-  compression_quality = max_compress ? "11" : "6"
+  compression_quality = max_compress ? "11" : "9"
   "brotli -f --quality=#{compression_quality} #{path} --output=#{path}.br"
 end
 
