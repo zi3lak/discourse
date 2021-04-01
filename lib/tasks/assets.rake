@@ -14,10 +14,6 @@ task 'assets:precompile:before' do
   STDERR.puts "Purging temp files"
   `rm -fr #{Rails.root}/tmp/cache`
 
-  STDERR.puts "Removing EMBER CLI package files"
-  `rm -fr #{Rails.root}/app/assets/javascripts/package.json`
-  `rm -fr #{Rails.root}/app/assets/javascripts/yarn.lock`
-
   # Ensure we clear emoji cache before pretty-text/emoji/data.js.es6.erb
   # is recompiled
   Emoji.clear_cache
