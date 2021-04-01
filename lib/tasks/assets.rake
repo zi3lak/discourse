@@ -149,14 +149,14 @@ def gzip(path)
 end
 
 # different brotli versions use different parameters
-def brotli_command(path)
-  # compression_quality = max_compress ? "11" : "9"
-  "brotli -f --quality=11 #{path} --output=#{path}.br"
+def brotli_command(path, max_compress)
+  compression_quality = max_compress ? "11" : "9"
+  "brotli -f --quality=#{compression_quality} #{path} --output=#{path}.br"
 end
 
-def brotli(path)
-  STDERR.puts brotli_command(path)
-  STDERR.puts `#{brotli_command(path)}`
+def brotli(path, max_compress)
+  STDERR.puts brotli_command(path, max_compress)
+  STDERR.puts `#{brotli_command(path, max_compress)}`
   raise "brotli compression failed: exit code #{$?.exitstatus}" if $?.exitstatus != 0
   STDERR.puts `chmod +r #{path}.br`.strip
   raise "chmod failed: exit code #{$?.exitstatus}" if $?.exitstatus != 0
@@ -284,7 +284,7 @@ task 'assets:precompile' => 'assets:precompile:before' do
         path = "#{assets_path}/#{file}"
           _file = (d = File.dirname(file)) == "." ? "_#{file}" : "#{d}/_#{File.basename(file)}"
           _path = "#{assets_path}/#{_file}"
-          # max_compress = max_compress?(info["logical_path"], locales)
+          max_compress = max_compress?(info["logical_path"], locales)
           if File.exists?(_path)
             STDERR.puts "Skipping: #{file} already compressed"
           else
@@ -292,15 +292,15 @@ task 'assets:precompile' => 'assets:precompile:before' do
               start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
               STDERR.puts "#{start} Compressing: #{file}"
 
-              # if max_compress
-              FileUtils.mv(path, _path)
-              compress(_file, file)
-              # end
+              if max_compress
+                FileUtils.mv(path, _path)
+                compress(_file, file)
+              end
 
               info["size"] = File.size(path)
               info["mtime"] = File.mtime(path).iso8601
               gzip(path)
-              brotli(path)
+              brotli(path, max_compress)
 
               STDERR.puts "Done compressing #{file} : #{(Process.clock_gettime(Process::CLOCK_MONOTONIC) - start).round(2)} secs"
               STDERR.puts
