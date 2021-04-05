@@ -69,7 +69,7 @@ class TopicList < DraftableList
       else
         "topic_list_#{@category.url.sub(/^\//, '')}/l/#{@filter}"
       end
-    elsif @tags
+    elsif @tags.present?
       tag = @tags.first
       "topic_list_tag/#{tag.name}/l/#{@filter}"
     else
