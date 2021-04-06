@@ -91,6 +91,9 @@ describe SiteSettings::TypeSupervisor do
       it "'simple_list' should be at the right position" do
         expect(SiteSettings::TypeSupervisor.types[:simple_list]).to eq(23)
       end
+      it "'html' should be at the right position" do
+        expect(SiteSettings::TypeSupervisor.types[:html]).to eq(24)
+      end
     end
   end
 
