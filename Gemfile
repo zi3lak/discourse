@@ -18,14 +18,14 @@ else
   # this allows us to include the bits of rails we use without pieces we do not.
   #
   # To issue a rails update bump the version number here
-  gem 'actionmailer', '6.0.3.5'
-  gem 'actionpack', '6.0.3.5'
+  gem 'actionmailer', '6.0.4.6'
+  gem 'actionpack', '6.0.4.6'
   gem 'actionview', '6.0.3.5'
   gem 'activemodel', '6.0.3.5'
   gem 'activerecord', '6.0.3.5'
   gem 'activesupport', '6.0.3.5'
-  gem 'railties', '6.0.3.5'
-  gem 'sprockets-rails'
+  gem 'railties', '6.0.4.6'
+  gem 'sprockets-rails', '>= 3.2.2'
 end
 
 gem 'json'
@@ -75,7 +75,7 @@ gem 'barber'
 
 gem 'message_bus'
 
-gem 'rails_multisite'
+gem 'rails_multisite', '>= 2.5.0'
 
 gem 'fast_xs', platform: :ruby
 
@@ -159,7 +159,7 @@ group :test, :development do
 
   gem 'rb-fsevent', require: RUBY_PLATFORM =~ /darwin/i ? 'rb-fsevent' : false
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 5.0.1'
 
   gem 'shoulda-matchers', require: false
   gem 'rspec-html-matchers'
@@ -167,7 +167,7 @@ group :test, :development do
   gem "rubocop-discourse", require: false
   gem 'parallel_tests'
 
-  gem 'rswag-specs'
+  gem 'rswag-specs', '>= 2.4.0'
 end
 
 group :development do
@@ -197,7 +197,7 @@ gem 'htmlentities', require: false
 gem 'rack-mini-profiler', require: ['enable_rails_patches']
 
 gem 'unicorn', require: false, platform: :ruby
-gem 'puma', require: false
+gem 'puma', '>= 5.6.2', require: false
 gem 'rbtrace', require: false, platform: :mri
 gem 'gc_tracer', require: false, platform: :mri
 
@@ -209,7 +209,7 @@ gem 'memory_profiler', require: false, platform: :mri
 
 gem 'cppjieba_rb', require: false
 
-gem 'lograge', require: false
+gem 'lograge', '>= 0.11.2', require: false
 gem 'logstash-event', require: false
 gem 'logstash-logger', require: false
 gem 'logster'
@@ -217,7 +217,7 @@ gem 'logster'
 # NOTE: later versions of sassc are causing a segfault, possibly dependent on processer architecture
 # and until resolved should be locked at 2.0.1
 gem 'sassc', '2.0.1', require: false
-gem "sassc-rails"
+gem "sassc-rails", ">= 2.1.2"
 
 gem 'rotp', require: false
 
@@ -246,4 +246,4 @@ gem 'webpush', require: false
 gem 'colored2', require: false
 gem 'maxminddb'
 
-gem 'rails_failover', require: false
+gem 'rails_failover', '>= 0.6.5', require: false
