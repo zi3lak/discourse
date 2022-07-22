@@ -58,7 +58,7 @@ gem 'redis-namespace'
 # we used an old branch which is the fastest one out there
 # are long term goal here is to fork this gem so we have a
 # better maintained living fork
-gem 'active_model_serializers', '~> 0.8.3'
+gem 'active_model_serializers', '~> 0.8.4'
 
 gem 'onebox'
 
