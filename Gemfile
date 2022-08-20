@@ -98,14 +98,14 @@ gem 'mustache'
 gem 'nokogiri'
 gem 'css_parser', require: false
 
-gem 'omniauth'
+gem 'omniauth', '>= 2.0.0'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
-gem 'omniauth-github'
+gem 'omniauth-github', '>= 2.0.0'
 
 gem 'omniauth-oauth2', require: false
 
-gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', '>= 1.0.0'
 
 gem 'oj'
 gem 'pg'
