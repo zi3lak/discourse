@@ -18,14 +18,14 @@ else
   # this allows us to include the bits of rails we use without pieces we do not.
   #
   # To issue a rails update bump the version number here
-  gem 'actionmailer', '6.0.3.5'
-  gem 'actionpack', '6.0.3.5'
-  gem 'actionview', '6.0.3.5'
-  gem 'activemodel', '6.0.3.5'
-  gem 'activerecord', '6.0.3.5'
-  gem 'activesupport', '6.0.3.5'
-  gem 'railties', '6.0.3.5'
-  gem 'sprockets-rails'
+  gem 'actionmailer', '6.1.7.5'
+  gem 'actionpack', '6.1.7.5'
+  gem 'actionview', '6.1.7.5'
+  gem 'activemodel', '6.1.7.5'
+  gem 'activerecord', '6.1.7.5'
+  gem 'activesupport', '6.1.7.5'
+  gem 'railties', '6.1.7.5'
+  gem 'sprockets-rails', '>= 3.3.0'
 end
 
 gem 'json'
@@ -58,7 +58,7 @@ gem 'redis-namespace'
 # we used an old branch which is the fastest one out there
 # are long term goal here is to fork this gem so we have a
 # better maintained living fork
-gem 'active_model_serializers', '~> 0.8.3'
+gem 'active_model_serializers', '~> 0.9.0'
 
 gem 'onebox'
 
@@ -75,7 +75,7 @@ gem 'barber'
 
 gem 'message_bus'
 
-gem 'rails_multisite'
+gem 'rails_multisite', '>= 3.0.0'
 
 gem 'fast_xs', platform: :ruby
 
@@ -159,24 +159,24 @@ group :test, :development do
 
   gem 'rb-fsevent', require: RUBY_PLATFORM =~ /darwin/i ? 'rb-fsevent' : false
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 5.0.2'
 
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers', '>= 5.0.0', require: false
   gem 'rspec-html-matchers'
   gem 'byebug', require: ENV['RM_INFO'].nil?, platform: :mri
   gem "rubocop-discourse", require: false
   gem 'parallel_tests'
 
-  gem 'rswag-specs'
+  gem 'rswag-specs', '>= 2.5.0'
 end
 
 group :development do
   gem 'ruby-prof', require: false, platform: :mri
-  gem 'bullet', require: !!ENV['BULLET']
+  gem 'bullet', '>= 6.1.5', require: !!ENV['BULLET']
   gem 'better_errors', platform: :mri, require: !!ENV['BETTER_ERRORS']
   gem 'binding_of_caller'
   gem 'yaml-lint'
-  gem 'annotate'
+  gem 'annotate', '>= 3.2.0'
   gem 'discourse_dev'
 end
 
@@ -209,7 +209,7 @@ gem 'memory_profiler', require: false, platform: :mri
 
 gem 'cppjieba_rb', require: false
 
-gem 'lograge', require: false
+gem 'lograge', '>= 0.12.0', require: false
 gem 'logstash-event', require: false
 gem 'logstash-logger', require: false
 gem 'logster'
@@ -246,4 +246,4 @@ gem 'webpush', require: false
 gem 'colored2', require: false
 gem 'maxminddb'
 
-gem 'rails_failover', require: false
+gem 'rails_failover', '>= 0.7.2', require: false
