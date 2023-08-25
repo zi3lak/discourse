@@ -36,7 +36,7 @@ gem 'sprockets', '3.7.2'
 
 # this will eventually be added to rails,
 # allows us to precompile all our templates in the unicorn master
-gem 'actionview_precompiler', require: false
+gem 'actionview_precompiler', '>= 0.3.0', require: false
 
 gem 'seed-fu'
 
