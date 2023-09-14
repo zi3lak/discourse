@@ -118,8 +118,8 @@ gem 'rake'
 gem 'thor', require: false
 gem 'diffy', require: false
 gem 'rinku'
-gem 'sidekiq'
-gem 'mini_scheduler'
+gem 'sidekiq', '>= 7.1.3'
+gem 'mini_scheduler', '>= 0.14.0'
 
 gem 'execjs', require: false
 gem 'mini_racer'
