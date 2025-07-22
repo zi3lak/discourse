@@ -24,7 +24,7 @@ else
   gem 'activemodel', '6.0.3.5'
   gem 'activerecord', '6.0.3.5'
   gem 'activesupport', '6.0.3.5'
-  gem 'railties', '6.0.3.5'
+  gem 'railties', '6.0.3.6'
   gem 'sprockets-rails'
 end
 
@@ -75,7 +75,7 @@ gem 'barber'
 
 gem 'message_bus'
 
-gem 'rails_multisite'
+gem 'rails_multisite', '>= 3.0.0'
 
 gem 'fast_xs', platform: :ruby
 
@@ -115,7 +115,7 @@ gem 'pry-byebug', require: false
 gem 'r2', require: false
 gem 'rake'
 
-gem 'thor', require: false
+gem 'thor', '>= 1.4.0', require: false
 gem 'diffy', require: false
 gem 'rinku'
 gem 'sidekiq'
@@ -159,7 +159,7 @@ group :test, :development do
 
   gem 'rb-fsevent', require: RUBY_PLATFORM =~ /darwin/i ? 'rb-fsevent' : false
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 5.0.2'
 
   gem 'shoulda-matchers', require: false
   gem 'rspec-html-matchers'
@@ -167,7 +167,7 @@ group :test, :development do
   gem "rubocop-discourse", require: false
   gem 'parallel_tests'
 
-  gem 'rswag-specs'
+  gem 'rswag-specs', '>= 2.5.0'
 end
 
 group :development do
@@ -209,7 +209,7 @@ gem 'memory_profiler', require: false, platform: :mri
 
 gem 'cppjieba_rb', require: false
 
-gem 'lograge', require: false
+gem 'lograge', '>= 0.12.0', require: false
 gem 'logstash-event', require: false
 gem 'logstash-logger', require: false
 gem 'logster'
@@ -246,4 +246,4 @@ gem 'webpush', require: false
 gem 'colored2', require: false
 gem 'maxminddb'
 
-gem 'rails_failover', require: false
+gem 'rails_failover', '>= 0.7.2', require: false
