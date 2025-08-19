@@ -22,7 +22,7 @@ else
   gem 'actionpack', '6.0.3.5'
   gem 'actionview', '6.0.3.5'
   gem 'activemodel', '6.0.3.5'
-  gem 'activerecord', '6.0.3.5'
+  gem 'activerecord', '7.1.5.2'
   gem 'activesupport', '6.0.3.5'
   gem 'railties', '6.0.3.5'
   gem 'sprockets-rails'
@@ -75,7 +75,7 @@ gem 'barber'
 
 gem 'message_bus'
 
-gem 'rails_multisite'
+gem 'rails_multisite', '>= 5.0.0'
 
 gem 'fast_xs', platform: :ruby
 
@@ -176,7 +176,7 @@ group :development do
   gem 'better_errors', platform: :mri, require: !!ENV['BETTER_ERRORS']
   gem 'binding_of_caller'
   gem 'yaml-lint'
-  gem 'annotate'
+  gem 'annotate', '>= 3.2.0'
   gem 'discourse_dev'
 end
 
@@ -246,4 +246,4 @@ gem 'webpush', require: false
 gem 'colored2', require: false
 gem 'maxminddb'
 
-gem 'rails_failover', require: false
+gem 'rails_failover', '>= 2.1.0', require: false
