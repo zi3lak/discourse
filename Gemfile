@@ -18,21 +18,21 @@ else
   # this allows us to include the bits of rails we use without pieces we do not.
   #
   # To issue a rails update bump the version number here
-  gem 'actionmailer', '6.0.3.5'
-  gem 'actionpack', '6.0.3.5'
+  gem 'actionmailer', '6.0.3.6'
+  gem 'actionpack', '6.0.3.6'
   gem 'actionview', '6.0.3.5'
   gem 'activemodel', '6.0.3.5'
   gem 'activerecord', '6.0.3.5'
   gem 'activesupport', '6.0.3.5'
-  gem 'railties', '6.0.3.5'
-  gem 'sprockets-rails'
+  gem 'railties', '6.0.3.6'
+  gem 'sprockets-rails', '>= 3.3.0'
 end
 
 gem 'json'
 
 # TODO: At the moment Discourse does not work with Sprockets 4, we would need to correct internals
 # This is a desired upgrade we should get to.
-gem 'sprockets', '3.7.2'
+gem 'sprockets', '3.7.3'
 
 # this will eventually be added to rails,
 # allows us to precompile all our templates in the unicorn master
@@ -68,14 +68,14 @@ gem 'http_accept_language', require: false
 # behavior, we will push these versions up when upgrading ember
 gem 'discourse-ember-rails', '0.18.6', require: 'ember-rails'
 gem 'discourse-ember-source', '~> 3.12.2'
-gem 'ember-handlebars-template', '0.8.0'
+gem 'ember-handlebars-template', '0.9.0'
 gem 'discourse-fonts'
 
 gem 'barber'
 
-gem 'message_bus'
+gem 'message_bus', '>= 3.3.5'
 
-gem 'rails_multisite'
+gem 'rails_multisite', '>= 3.0.0'
 
 gem 'fast_xs', platform: :ruby
 
@@ -98,14 +98,14 @@ gem 'mustache'
 gem 'nokogiri'
 gem 'css_parser', require: false
 
-gem 'omniauth'
-gem 'omniauth-facebook'
+gem 'omniauth', '>= 1.9.2'
+gem 'omniauth-facebook', '>= 9.0.0'
 gem 'omniauth-twitter'
-gem 'omniauth-github'
+gem 'omniauth-github', '>= 2.0.0'
 
-gem 'omniauth-oauth2', require: false
+gem 'omniauth-oauth2', '>= 1.7.2', require: false
 
-gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', '>= 1.0.0'
 
 gem 'oj'
 gem 'pg'
@@ -118,17 +118,17 @@ gem 'rake'
 gem 'thor', require: false
 gem 'diffy', require: false
 gem 'rinku'
-gem 'sidekiq'
-gem 'mini_scheduler'
+gem 'sidekiq', '>= 6.2.1'
+gem 'mini_scheduler', '>= 0.14.0'
 
 gem 'execjs', require: false
 gem 'mini_racer'
 
 gem 'highline', require: false
 
-gem 'rack'
+gem 'rack', '>= 2.2.18'
 
-gem 'rack-protection' # security
+gem 'rack-protection' , '>= 2.2.0' # security
 gem 'cbor', require: false
 gem 'cose', require: false
 gem 'addressable'
@@ -159,7 +159,7 @@ group :test, :development do
 
   gem 'rb-fsevent', require: RUBY_PLATFORM =~ /darwin/i ? 'rb-fsevent' : false
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 5.0.2'
 
   gem 'shoulda-matchers', require: false
   gem 'rspec-html-matchers'
@@ -167,13 +167,13 @@ group :test, :development do
   gem "rubocop-discourse", require: false
   gem 'parallel_tests'
 
-  gem 'rswag-specs'
+  gem 'rswag-specs', '>= 2.5.0'
 end
 
 group :development do
   gem 'ruby-prof', require: false, platform: :mri
   gem 'bullet', require: !!ENV['BULLET']
-  gem 'better_errors', platform: :mri, require: !!ENV['BETTER_ERRORS']
+  gem 'better_errors', '>= 2.10.0', platform: :mri, require: !!ENV['BETTER_ERRORS']
   gem 'binding_of_caller'
   gem 'yaml-lint'
   gem 'annotate'
@@ -194,7 +194,7 @@ gem 'htmlentities', require: false
 #  If you want to amend mini profiler to do the monkey patches in the railties
 #  we are open to it. by deferring require to the initializer we can configure discourse installs without it
 
-gem 'rack-mini-profiler', require: ['enable_rails_patches']
+gem 'rack-mini-profiler', '>= 2.3.2', require: ['enable_rails_patches']
 
 gem 'unicorn', require: false, platform: :ruby
 gem 'puma', require: false
@@ -209,7 +209,7 @@ gem 'memory_profiler', require: false, platform: :mri
 
 gem 'cppjieba_rb', require: false
 
-gem 'lograge', require: false
+gem 'lograge', '>= 0.12.0', require: false
 gem 'logstash-event', require: false
 gem 'logstash-logger', require: false
 gem 'logster'
@@ -246,4 +246,4 @@ gem 'webpush', require: false
 gem 'colored2', require: false
 gem 'maxminddb'
 
-gem 'rails_failover', require: false
+gem 'rails_failover', '>= 0.7.2', require: false
