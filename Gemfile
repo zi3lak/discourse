@@ -83,7 +83,7 @@ gem 'xorcist'
 
 gem 'fastimage'
 
-gem 'aws-sdk-s3', require: false
+gem 'aws-sdk-s3', '>= 1.208.0', require: false
 gem 'aws-sdk-sns', require: false
 gem 'excon', require: false
 gem 'unf', require: false
